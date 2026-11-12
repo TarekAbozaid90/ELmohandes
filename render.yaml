@@ -1,0 +1,17 @@
+# Render Blueprint — يجبر المشروع على Node.js (يحل مشكلة Ruby/Gemfile)
+services:
+  - type: web
+    name: mohandis-pro
+    runtime: node
+    branch: main
+    plan: free
+    buildCommand: ""
+    startCommand: node server/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: 0.0.0.0
+      - key: SEED_DEMO
+        value: "1"
