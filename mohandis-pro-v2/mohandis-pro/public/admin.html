@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — مركز المهندس الشامل</title>
+<meta name="theme-color" content="#0b1220">
+<link rel="icon" href="assets/logo-circle.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ Design System ============ */
+:root{
+  --bg:#f3f5fa; --surface:#ffffff; --ink:#0f172a; --muted:#64748b; --faint:#94a3b8;
+  --line:#e6eaf2; --line-2:#eef1f7;
+  --brand:#d11a22; --brand-dark:#b0141b; --amber:#f59e0b; --nav:#0b1220; --nav2:#121b30;
+  --ok:#10b981; --ok-bg:#ecfdf5; --info:#3b82f6; --info-bg:#eff6ff;
+  --warn-bg:#fffbeb; --danger:#ef4444; --danger-bg:#fef2f2;
+  --r:16px; --r-sm:12px;
+  --sh:0 1px 2px rgba(15,23,42,.05), 0 10px 28px -16px rgba(15,23,42,.18);
+  --sh-lg:0 24px 60px -24px rgba(15,23,42,.35);
+  --font:'Tajawal','Segoe UI',Tahoma,'Noto Kufi Arabic',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============ Login ============ */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(1200px 600px at 80% -10%, #1e293b 0%, transparent 60%),
+             radial-gradient(900px 500px at 10% 110%, #3b0d0f55 0%, transparent 60%),
+             linear-gradient(160deg,#0b1220,#111a2e 60%,#0b1220);position:relative;overflow:hidden}
+.login-screen::after{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,transparent 0 79px,#ffffff08 79px 80px),
+  repeating-linear-gradient(0deg,transparent 0 79px,#ffffff08 79px 80px);pointer-events:none}
+.login-card{width:100%;max-width:400px;background:#fff;border-radius:26px;padding:34px 30px;box-shadow:var(--sh-lg);position:relative;z-index:1}
+.login-logo{width:74px;height:74px;border-radius:22px;object-fit:cover;margin:0 auto;display:block;box-shadow:0 10px 24px -10px rgba(209,26,34,.55)}
+.login-card h1{font-size:19px;font-weight:900;text-align:center;margin-top:16px;letter-spacing:-.2px}
+.login-card .sub{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.login-form{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.field{position:relative}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:#f8fafc;border-radius:14px;padding:13px 44px 13px 14px;outline:none;transition:.18s;font-weight:600}
+.field textarea{padding:12px 14px;min-height:86px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amber);background:#fff;box-shadow:0 0 0 4px #f59e0b22}
+.field .ic{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--faint);display:flex}
+.field .peek{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--faint);padding:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:14px;padding:12px 18px;transition:.18s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;box-shadow:0 12px 24px -14px #0f172a}
+.btn-primary:hover{background:#1e293b}
+.btn-brand{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;box-shadow:0 12px 24px -14px var(--brand)}
+.btn-brand:hover{filter:brightness(1.05)}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:#cbd5e1;background:#f8fafc}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-danger{background:#fff1f2;color:var(--danger);border:1.5px solid #fecdd3}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:8px 12px;border-radius:11px;font-size:12px}
+.btn-block{width:100%}
+.login-meta{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:11px;color:var(--faint)}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block;margin-left:6px}
+.conn-dot.on{background:var(--ok);box-shadow:0 0 0 4px #10b98133}
+.conn-dot.off{background:var(--danger);box-shadow:0 0 0 4px #ef444433}
+.err-msg{background:var(--danger-bg);color:var(--danger);font-size:12px;font-weight:700;padding:10px 12px;border-radius:12px;display:none}
+.err-msg.show{display:block}
+
+/* ============ App shell ============ */
+.app{display:grid;grid-template-columns:252px 1fr;min-height:100vh}
+.sidebar{background:linear-gradient(180deg,var(--nav),var(--nav2));color:#cbd5e1;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 16px;border-bottom:1px solid #ffffff12}
+.brand img{width:42px;height:42px;border-radius:13px;object-fit:cover}
+.brand .t{font-weight:900;color:#fff;font-size:14px;line-height:1.25}
+.brand .s{font-size:10px;color:#94a3b8;letter-spacing:.4px}
+.nav{padding:14px 10px;display:flex;flex-direction:column;gap:4px;flex:1;overflow:auto}
+.nav-label{font-size:10px;font-weight:800;color:#64748b;padding:12px 12px 6px;letter-spacing:.6px}
+.nav-btn{display:flex;align-items:center;gap:11px;width:100%;padding:11px 13px;border-radius:13px;font-weight:700;font-size:13.5px;color:#94a3b8;transition:.16s;position:relative}
+.nav-btn svg{width:19px;height:19px;flex:0 0 auto}
+.nav-btn:hover{background:#ffffff10;color:#e2e8f0}
+.nav-btn.active{background:linear-gradient(90deg,#ffffff14,#ffffff06);color:#fff;box-shadow:inset -3px 0 0 var(--amber)}
+.nav-btn .badge{margin-inline-start:auto;background:var(--brand);color:#fff;font-size:10.5px;font-weight:900;min-width:22px;height:20px;padding:0 6px;border-radius:99px;display:flex;align-items:center;justify-content:center}
+.nav-btn .badge.zero{background:#334155;color:#94a3b8}
+.side-foot{padding:14px;border-top:1px solid #ffffff12}
+.user-card{display:flex;align-items:center;gap:10px;background:#ffffff0d;border-radius:14px;padding:10px 12px}
+.avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--amber),var(--brand));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.user-card .n{font-size:12.5px;font-weight:800;color:#f1f5f9}
+.user-card .r{font-size:10px;color:#64748b}
+.logout{margin-inline-start:auto;color:#64748b;padding:7px;border-radius:9px}
+.logout:hover{color:#f87171;background:#ffffff10}
+
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{position:sticky;top:0;z-index:30;background:#ffffffd9;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:14px;padding:14px 22px}
+.topbar h2{font-size:17px;font-weight:900;letter-spacing:-.2px}
+.topbar .crumb{font-size:11px;color:var(--faint);font-weight:600;margin-top:2px}
+.top-actions{margin-inline-start:auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:7px 13px;font-size:11.5px;font-weight:800;color:var(--muted)}
+.pill.live{color:#047857;background:var(--ok-bg);border-color:#a7f3d0}
+.pill.live.off{color:var(--danger);background:var(--danger-bg);border-color:#fecdd3}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.live .dot{animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.clock{font-variant-numeric:tabular-nums;font-weight:800;color:var(--ink);font-size:12.5px}
+.icon-btn{width:38px;height:38px;border-radius:12px;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:.15s;position:relative}
+.icon-btn:hover{color:var(--ink);border-color:#cbd5e1}
+.icon-btn.spin svg{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.content{padding:20px 22px 40px;max-width:1400px;width:100%;margin:0 auto}
+
+/* ============ KPI ============ */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:13px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--k,var(--amber))}
+.kpi .lbl{font-size:11.5px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px}
+.kpi .val{font-size:25px;font-weight:900;margin-top:7px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:12px;font-weight:800;color:var(--faint);margin-inline-start:3px}
+.kpi .delta{font-size:10.5px;font-weight:800;margin-top:5px;color:var(--ok)}
+.kpi .delta.down{color:var(--danger)}
+.kpi .ico{position:absolute;inset-inline-end:12px;top:12px;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--kb,#fef3c7);color:var(--k,#d97706)}
+
+/* ============ Cards / panels ============ */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.panel-head{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--line-2)}
+.panel-head h3{font-size:14px;font-weight:900}
+.panel-head .hint{font-size:11px;color:var(--faint);font-weight:600}
+.panel-head .end{margin-inline-start:auto;display:flex;gap:8px;align-items:center}
+.panel-body{padding:16px 18px}
+.grid-2{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;margin-top:14px}
+.grid-2b{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.section-title{font-size:15px;font-weight:900;margin:22px 2px 12px;display:flex;align-items:center;gap:9px}
+.section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ============ Toolbar ============ */
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh);margin-bottom:14px}
+.search{position:relative;flex:1;min-width:200px;max-width:340px}
+.search input{width:100%;border:1.5px solid var(--line);background:#f8fafc;border-radius:12px;padding:10px 38px 10px 12px;outline:none;font-weight:600;font-size:13px}
+.search input:focus{border-color:var(--amber);background:#fff;box-shadow:0 0 0 4px #f59e0b1f}
+.search svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--faint)}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:8px 14px;font-size:12px;font-weight:800;color:var(--muted);transition:.15s}
+.chip:hover{border-color:#cbd5e1;color:var(--ink)}
+.chip.on{background:#0f172a;border-color:#0f172a;color:#fff}
+select.filter{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-weight:700;font-size:12.5px;outline:none;color:var(--muted)}
+.sep{width:1px;height:26px;background:var(--line)}
+
+/* ============ Table ============ */
+.table-wrap{overflow-x:auto}
+table.grid{width:100%;border-collapse:collapse;font-size:13px;min-width:820px}
+table.grid th{background:#f8fafc;color:var(--muted);font-size:11px;font-weight:900;padding:11px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+table.grid td{padding:12px 13px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+table.grid tbody tr{transition:.12s;cursor:pointer}
+table.grid tbody tr:hover{background:#fffbef}
+table.grid tbody tr:last-child td{border-bottom:none}
+.cell-main{font-weight:800}
+.cell-sub{font-size:11px;color:var(--faint);font-weight:600;margin-top:2px}
+.ref{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;color:var(--faint);direction:ltr;display:inline-block}
+.price{font-weight:900;color:var(--brand)}
+.avatar-sm{width:32px;height:32px;border-radius:10px;background:#eef2ff;color:#4f46e5;font-weight:900;font-size:13px;display:inline-flex;align-items:center;justify-content:center;margin-inline-end:9px;vertical-align:middle}
+.acts{display:flex;gap:6px}
+.act{width:31px;height:31px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:#fff;color:var(--muted);transition:.14s}
+.act:hover{border-color:#cbd5e1;color:var(--ink);transform:translateY(-1px)}
+.act.wa:hover{background:#25d366;border-color:#25d366;color:#fff}
+.act.del:hover{background:var(--danger);border-color:var(--danger);color:#fff}
+
+/* ============ Status badges ============ */
+.st{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:900;padding:5px 10px;border-radius:99px;white-space:nowrap;border:1.5px solid transparent}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st.new{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.st.review{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.st.contact{background:#eef2ff;color:#4338ca;border-color:#c7d2fe}
+.st.confirm{background:#ecfeff;color:#0e7490;border-color:#a5f3fc}
+.st.ship{background:#f5f3ff;color:#6d28d9;border-color:#ddd6fe}
+.st.done,.st.delivered{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+.st.ready{background:#f0fdfa;color:#0f766e;border-color:#99f6e4}
+.st.repair{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
+.st.cancel{background:#fef2f2;color:#b91c1c;border-color:#fecdd3}
+.st.demo{background:#f1f5f9;color:#475569;border-color:#e2e8f0}
+
+/* ============ Charts ============ */
+.chart-\boxed{position:relative;height:240px}
+.chart-box canvas{width:100%;height:100%;display:block}
+.legend{display:flex;gap:16px;font-size:11.5px;font-weight:800;color:var(--muted);margin-bottom:8px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-inline-end:6px}
+.bars{display:flex;flex-direction:column;gap:11px}
+.bar-row{display:grid;grid-template-columns:96px 1fr 34px;gap:10px;align-items:center;font-size:12px}
+.bar-row .nm{font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:10px;background:#f1f5f9;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.bar-row .ct{font-weight:900;text-align:center;font-variant-numeric:tabular-nums}
+
+/* ============ Empty / skeleton ============ */
+.empty{text-align:center;padding:46px 20px;color:var(--faint)}
+.empty svg{width:52px;height:52px;margin-bottom:12px;opacity:.5}
+.empty .t{font-weight:900;color:var(--muted);font-size:14px}
+.empty .s{font-size:12px;margin-top:5px}
+.skel{background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 37%,#f1f5f9 63%);background-size:400% 100%;animation:sk 1.3s infinite;border-radius:8px}
+@keyframes sk{0%{background-position:100% 0}100%{background-position:0 0}}
+
+/* ============ Modal ============ */
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;background:#0f172a99;backdrop-filter:blur(3px);animation:fade .18s}
+@keyframes fade{from{opacity:0}}
+.sheet{background:#fff;border-radius:22px;width:100%;max-width:600px;max-height:92vh;overflow:auto;box-shadow:var(--sh-lg);animation:pop .2s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{transform:scale(.96) translateY(8px);opacity:0}}
+.sheet-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line-2);position:sticky;top:0;background:#fff;border-radius:22px 22px 0 0;z-index:2}
+.sheet-head h3{font-size:15.5px;font-weight:900}
+.sheet-head .x{margin-inline-start:auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#f1f5f9}
+.sheet-head .x:hover{background:#fee2e2;color:var(--danger)}
+.sheet-body{padding:18px 20px}
+.sheet-foot{padding:14px 20px;border-top:1px solid var(--line-2);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:#fff}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dg{background:#f8fafc;border:1px solid var(--line-2);border-radius:13px;padding:11px 13px}
+.dg .k{font-size:10.5px;color:var(--faint);font-weight:800}
+.dg .v{font-size:13.5px;font-weight:800;margin-top:4px;word-break:break-word}
+.dg.full{grid-column:1/-1}
+.timeline{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.tl{font-size:10.5px;font-weight:800;padding:5px 9px;border-radius:8px;background:#f1f5f9;color:#94a3b8}
+.tl.on{background:#0f172a;color:#fff}
+.tl.done{background:#ecfdf5;color:#047857}
+
+/* ============ Products ============ */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.prod-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--sh);transition:.18s;display:flex;flex-direction:column}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 18px 34px -18px rgba(15,23,42,.3)}
+.prod-img{height:150px;background:#f8fafc;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.prod-img img{max-width:100%;max-height:100%;object-fit:contain;padding:10px}
+.prod-cat{position:absolute;top:9px;inset-inline-start:9px;background:#0f172ae6;color:#fff;font-size:10px;font-weight:800;padding:4px 9px;border-radius:99px}
+.prod-body{padding:12px 14px;flex:1;display:flex;flex-direction:column;gap:6px}
+.prod-title{font-size:12.5px;font-weight:800;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px}
+.prod-price{font-weight:900;color:var(--brand);font-size:14px}
+.prod-foot{display:flex;gap:7px;padding:10px 14px 13px;border-top:1px dashed var(--line)}
+.prod-foot .btn{flex:1}
+
+/* ============ Settings ============ */
+.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.set-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.set-card h4{font-size:13.5px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.set-card .desc{font-size:11.5px;color:var(--faint);font-weight:600;margin-bottom:14px}
+.lbl{font-size:11.5px;font-weight:800;color:var(--muted);display:block;margin-bottom:6px}
+.inp{width:100%;border:1.5px solid var(--line);background:#f8fafc;border-radius:12px;padding:11px 13px;outline:none;font-weight:600;transition:.15s}
+.inp:focus{border-color:var(--amber);background:#fff;box-shadow:0 0 0 4px #f59e0b1f}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mt{margin-top:12px}
+.kv{display:flex;justify-content:space-between;font-size:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-weight:700}
+.kv:last-child{border:none}
+.kv .v{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:11.5px;direction:ltr}
+.switch{position:relative;width:46px;height:26px;background:#e2e8f0;border-radius:99px;transition:.2s;flex:0 0 auto}
+.switch::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 2px 5px #0003}
+.switch.on{background:var(--ok)}
+.switch.on::after{transform:translateX(-20px)}
+
+/* ============ Toast / lightbox / mobilenav ============ */
+.toast{position:fixed;bottom:22px;inset-inline-start:22px;background:#0f172a;color:#fff;padding:13px 17px;border-radius:15px;font-weight:800;font-size:13px;z-index:120;display:flex;align-items:center;gap:10px;box-shadow:0 20px 40px -16px #000;transform:translateY(140%);opacity:0;transition:.3s cubic-bezier(.2,.9,.3,1.1);max-width:min(90vw,420px)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast .ti{width:26px;height:26px;border-radius:8px;background:#10b981;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.toast.err .ti{background:var(--danger)}
+.toast.warn .ti{background:var(--amber)}
+.light\boxed{position:fixed;inset:0;background:#000c;z-index:110;display:flex;align-items:center;justify-content:center;padding:24px}
+.lightbox img{max-width:94vw;max-height:88vh;border-radius:14px;box-shadow:0 30px 80px #000}
+.lightbox .close{position:absolute;top:18px;inset-inline-end:18px;color:#fff;font-size:26px;background:#ffffff22;width:42px;height:42px;border-radius:50%}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs img{width:74px;height:74px;object-fit:cover;border-radius:11px;border:2px solid var(--line);cursor:pointer;transition:.15s}
+.thumbs img:hover{border-color:var(--amber);transform:scale(1.04)}
+.mobilenav{display:none}
+
+/* ============ Responsive ============ */
+@media(max-width:1180px){ .kpi-grid{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:1fr} }
+@media(max-width:980px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .content{padding:14px 13px 86px}
+  .topbar{padding:11px 13px}
+  .topbar h2{font-size:15px}
+  .clock{display:none}
+  .mobilenav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#0b1220ee;backdrop-filter:blur(10px);z-index:60;padding:7px 6px calc(7px + env(safe-area-inset-bottom));border-top:1px solid #ffffff1a;justify-content:space-around}
+  .mobilenav button{display:flex;flex-direction:column;align-items:center;gap:3px;color:#64748b;font-size:9.5px;font-weight:800;padding:4px 8px;border-radius:10px;position:relative;min-width:56px}
+  .mobilenav button svg{width:20px;height:20px}
+  .mobilenav button.active{color:#fff;background:#ffffff12}
+  .mobilenav .badge{position:absolute;top:0;inset-inline-end:4px;background:var(--brand);color:#fff;font-size:8.5px;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-weight:900;padding:0 3px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2b,.set-grid,.detail-grid{grid-template-columns:1fr}
+  .kpi .val{font-size:21px}
+}
+@media(max-width:520px){
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .kpi{padding:12px 13px}
+  .toolbar{padding:10px}
+  .search{max-width:none}
+}
+@media print{ .sidebar,.topbar,.toolbar,.mobilenav{display:none} .app{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <img class="login-logo" src="assets/logo-circle.jpg" alt="شعار مركز المهندس" onerror="this.style.background='#0f172a';this.removeAttribute('src')">
+    <h1>لوحة تحكم مركز المهندس الشامل</h1>
+    <p class="sub">نظام إدارة الطلبات والصيانة — نسخة Pro<br>كل الطلبات من كل الأجهزة في مكان واحد</p>
+    <form class="login-form" onsubmit="doLogin(event)">
+      <div class="err-msg" id="loginErr"></div>
+      <div class="field">
+        <input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password" required>
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+        <button type="button" class="peek" onclick="togglePeek()" tabindex="-1" aria-label="إظهار">
+          <svg id="eyeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button type="submit" class="btn btn-brand btn-block" id="loginBtn">
+        دخول اللوحة
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      </button>
+    </form>
+    <div class="login-meta">
+      <span><i class="conn-dot" id="loginDot"></i> <span id="loginConn">جاري فحص الاتصال…</span></span>
+      <span>v2.0 Pro</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="app hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="assets/logo-circle.jpg" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="t">مركز المهندس الشامل</div>
+        <div class="s">لوحة التحكم Pro</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-label">القائمة الرئيسية</div>
+      <button class="nav-btn active" data-view="overview" onclick="go('overview')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        نظرة عامة
+      </button>
+      <button class="nav-btn" data-view="orders" onclick="go('orders')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        طلبات الشراء
+        <span class="badge zero" id="navOrders">0</span>
+      </button>
+      <button class="nav-btn" data-view="maint" onclick="go('maint')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1z"/></svg>
+        طلبات الصيانة
+        <span class="badge zero" id="navMaint">0</span>
+      </button>
+      <button class="nav-btn" data-view="products" onclick="go('products')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+        المنتجات
+        <span class="badge zero" id="navProducts">0</span>
+      </button>
+      <div class="nav-label">النظام</div>
+      <button class="nav-btn" data-view="settings" onclick="go('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.3.6.9 1 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        الإعدادات
+      </button>
+    </nav>
+    <div class="side-foot">
+      <div class="user-card">
+        <div class="avatar">م</div>
+        <div>
+          <div class="n">المدير</div>
+          <div class="r">صلاحية كاملة</div>
+        </div>
+        <button class="logout" onclick="logout()" title="تسجيل الخروج">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <h2 id="pageTitle">نظرة عامة</h2>
+        <div class="crumb" id="pageCrumb">ملخص أداء المتجر لحظة بلحظة</div>
+      </div>
+      <div class="top-actions">
+        <span class="pill live" id="livePill" title="حالة الاتصال بقاعدة البيانات">
+          <i class="dot"></i> <span id="liveText">متصل</span>
+        </span>
+        <span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span class="clock" id="liveClock">--:--:--</span></span>
+        <button class="icon-btn" id="refreshBtn" onclick="refreshNow()" title="تحديث الآن">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ===== OVERVIEW ===== -->
+      <section id="view-overview" class="view">
+        <div class="kpi-grid">
+          <div class="kpi" style="--k:#d11a22;--kb:#fee2e2">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg></div>
+            <div class="lbl">طلبات اليوم</div>
+            <div class="val" id="kpiToday">0</div>
+            <div class="delta" id="kpiTodayDelta">&nbsp;</div>
+          </div>
+          <div class="kpi" style="--k:#f59e0b;--kb:#fef3c7">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div class="lbl">تحتاج متابعة</div>
+            <div class="val" id="kpiPending">0</div>
+            <div class="delta" id="kpiPendingDelta">&nbsp;</div>
+          </div>
+          <div class="kpi" style="--k:#3b82f6;--kb:#dbeafe">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/></svg></div>
+            <div class="lbl">إجمالي الطلبات</div>
+            <div class="val" id="kpiOrders">0</div>
+            <div class="delta" id="kpiOrdersDelta">&nbsp;</div>
+          </div>
+          <div class="kpi" style="--k:#8b5cf6;--kb:#ede9fe">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1z"/></svg></div>
+            <div class="lbl">طلبات الصيانة</div>
+            <div class="val" id="kpiMaint">0</div>
+            <div class="delta" id="kpiMaintDelta">&nbsp;</div>
+          </div>
+          <div class="kpi" style="--k:#10b981;--kb:#d1fae5">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="lbl">الزيارات</div>
+            <div class="val" id="kpiVisits">0</div>
+            <div class="delta" id="kpiVisitsDelta">&nbsp;</div>
+          </div>
+          <div class="kpi" style="--k:#0ea5e9;--kb:#e0f2fe">
+            <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="lbl">إيراد تقديري</div>
+            <div class="val" id="kpiRevenue">0<small>ج.م</small></div>
+            <div class="delta" id="kpiRevenueDelta">&nbsp;</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>نشاط آخر 14 يوم</h3><span class="hint">طلبات مقابل زيارات</span>
+              <div class="end"><div class="legend"><span><i style="background:#d11a22"></i>طلبات</span><span><i style="background:#f59e0b"></i>زيارات</span></div></div>
+            </div>
+            <div class="panel-body"><div class="chart-box"><canvas id="chartActivity"></canvas></div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>حالات طلبات الشراء</h3></div>
+            <div class="panel-body"><div class="bars" id="statusBars"><div class="empty" style="padding:24px">لا توجد بيانات بعد</div></div></div>
+          </div>
+        </div>
+
+        <div class="grid-2b">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>أحدث طلبات الشراء</h3>
+              <div class="end"><button class="btn btn-ghost btn-sm" onclick="go('orders')">عرض الكل</button></div>
+            </div>
+            <div class="table-wrap"><table class="grid" id="recentOrdersTable">
+              <thead><tr><th>العميل</th><th>المنتج</th><th>الحالة</th></tr></thead>
+              <tbody></tbody>
+            </table></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>أحدث طلبات الصيانة</h3>
+              <div class="end"><button class="btn btn-ghost btn-sm" onclick="go('maint')">عرض الكل</button></div>
+            </div>
+            <div class="table-wrap"><table class="grid" id="recentMaintTable">
+              <thead><tr><th>العميل</th><th>الجهاز / العطل</th><th>الحالة</th></tr></thead>
+              <tbody></tbody>
+            </table></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ORDERS ===== -->
+      <section id="view-orders" class="view hidden">
+        <div class="toolbar">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="ordersSearch" placeholder="بحث بالاسم أو الهاتف أو المنتج…" oninput="renderOrders()">
+          </div>
+          <select class="filter" id="ordersStatus" onchange="renderOrders()"><option value="">كل الحالات</option></select>
+          <div class="sep"></div>
+          <button class="chip" id="chipTodayOrders" onclick="toggleToday('orders')">اليوم فقط</button>
+          <div style="margin-inline-start:auto" class="row">
+            <button class="btn btn-ghost btn-sm" onclick="exportCSV('orders')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              تصدير CSV
+            </button>
+            <button class="btn btn-brand btn-sm" onclick="refreshNow()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/></svg>
+              تحديث
+            </button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="grid" id="ordersTable">
+              <thead><tr>
+                <th style="width:34px">#</th><th>الطلب</th><th>العميل</th><th>المنتج</th><th>السعر</th><th>التاريخ</th><th>الحالة</th><th style="width:120px">إجراءات</th>
+              </tr></thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+          <div id="ordersEmpty" class="empty hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+            <div class="t">لا توجد طلبات مطابقة</div>
+            <div class="s">الطلبات الجديدة من أي جهاز هتظهر هنا فوراً — جرّب تحديث</div>
+          </div>
+          <div class="panel-head" style="border-top:1px solid var(--line-2);border-bottom:none" id="ordersFoot">
+            <span class="hint" id="ordersCount">0 طلب</span>
+            <div class="end"><button class="btn btn-ghost btn-sm" id="ordersMore" onclick="ordersLimit+=100;renderOrders()" style="display:none">تحميل المزيد</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MAINTENANCE ===== -->
+      <section id="view-maint" class="view hidden">
+        <div class="toolbar">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="maintSearch" placeholder="بحث بالاسم أو الجهاز أو العطل…" oninput="renderMaint()">
+          </div>
+          <select class="filter" id="maintStatus" onchange="renderMaint()"><option value="">كل الحالات</option></select>
+          <div style="margin-inline-start:auto" class="row">
+            <button class="btn btn-ghost btn-sm" onclick="exportCSV('maint')">تصدير CSV</button>
+            <button class="btn btn-brand btn-sm" onclick="refreshNow()">تحديث</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="grid" id="maintTable">
+              <thead><tr>
+                <th style="width:34px">#</th><th>الطلب</th><th>العميل</th><th>الجهاز / العطل</th><th>الصور</th><th>التاريخ</th><th>الحالة</th><th style="width:120px">إجراءات</th>
+              </tr></thead>
+              <tbody id="maintBody"></tbody>
+            </table>
+          </div>
+          <div id="maintEmpty" class="empty hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1z"/></svg>
+            <div class="t">لا توجد طلبات صيانة مطابقة</div>
+            <div class="s">طلبات الصيانة من الموقع بتظهر هنا مباشرة مع صور الأعطال</div>
+          </div>
+          <div class="panel-head" style="border-top:1px solid var(--line-2);border-bottom:none">
+            <span class="hint" id="maintCount">0 طلب</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PRODUCTS ===== -->
+      <section id="view-products" class="view hidden">
+        <div class="toolbar">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="prodSearch" placeholder="بحث في المنتجات…" oninput="renderProducts()">
+          </div>
+          <select class="filter" id="prodCat" onchange="renderProducts()"><option value="">كل التصنيفات</option></select>
+          <div style="margin-inline-start:auto">
+            <button class="btn btn-brand btn-sm" onclick="openProductModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 5v14M5 12h14"/></svg>
+              منتج جديد
+            </button>
+          </div>
+        </div>
+        <div class="prod-grid" id="prodGrid"></div>
+        <div id="prodEmpty" class="empty hidden panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/></svg>
+          <div class="t">لا توجد منتجات</div>
+          <div class="s">أضف أول منتج من زر «منتج جديد»</div>
+        </div>
+      </section>
+
+      <!-- ===== SETTINGS ===== -->
+      <section id="view-settings" class="view hidden">
+        <div class="set-grid">
+          <div class="set-card">
+            <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> تغيير كلمة المرور</h4>
+            <div class="desc">كلمة المرور محفوظة مشفّرة في قاعدة البيانات — تغييرها يُسقط جلسات الأجهزة الأخرى تلقائياً.</div>
+            <label class="lbl">كلمة المرور الحالية</label>
+            <input type="password" class="inp" id="curPass" autocomplete="current-password">
+            <div class="mt"><label class="lbl">كلمة المرور الجديدة (6 أحرف على الأقل)</label>
+            <input type="password" class="inp" id="newPass" autocomplete="new-password"></div>
+            <div class="mt row"><button class="btn btn-primary btn-sm" onclick="changePassword()">حفظ كلمة المرور الجديدة</button></div>
+          </div>
+
+          <div class="set-card">
+            <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg> إشعارات الطلب الجديد</h4>
+            <div class="desc">تنبيه صوتي + إشعار المتصفح في نفس اللحظة اللي يوصل فيها طلب من أي جهاز.</div>
+            <div class="kv"><span>إشعارات المتصفح</span><button class="switch" id="swNotif" onclick="toggleNotif()" aria-label="toggle"></button></div>
+            <div class="kv"><span>التنبيه الصوتي</span><button class="switch on" id="swSound" onclick="toggleSwitch(this,'sound')" aria-label="toggle"></button></div>
+            <div class="kv"><span>التحديث التلقائي</span><span class="v" id="pollInfo">كل 4 ثوانٍ</span></div>
+            <div class="mt row"><button class="btn btn-ghost btn-sm" onclick="testNotification()">تجربة التنبيه</button></div>
+          </div>
+
+          <div class="set-card">
+            <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> النسخ الاحتياطي والاستيراد</h4>
+            <div class="desc">صدّر كل الطلبات والصيانة والمنتجات ملف JSON واحد — واحفظه في جوجل درايف أو على جهازك.</div>
+            <div class="row">
+              <button class="btn btn-ghost btn-sm" onclick="exportBackup()">⬇ تصدير نسخة كاملة</button>
+              <label class="btn btn-ghost btn-sm" style="margin:0">⬆ استيراد ملف
+                <input type="file" accept=".json" hidden onchange="importBackup(this)">
+              </label>
+            </div>
+            <div class="mt kv"><span>حجم قاعدة البيانات</span><span class="v" id="dbSize">—</span></div>
+            <div class="kv"><span>آخر مزامنة ناجحة</span><span class="v" id="lastSyncSet">—</span></div>
+          </div>
+
+          <div class="set-card">
+            <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg> حالة النظام</h4>
+            <div class="desc">كل الطلبات محفوظة في قاعدة بيانات حقيقية على السيرفر — تظهر من الموبايل والكمبيوتر معاً.</div>
+            <div class="kv"><span>الاتصال</span><span class="v" id="sysConn">—</span></div>
+            <div class="kv"><span>عنوان الـ API</span><span class="v" id="sysApi">/api</span></div>
+            <div class="kv"><span>الطلبات / الصيانة / المنتجات</span><span class="v" id="sysCounts">— / — / —</span></div>
+            <div class="kv"><span>الإصدار</span><span class="v">Dashboard v2.0 Pro</span></div>
+            <div class="mt row">
+              <button class="btn btn-danger btn-sm" onclick="deleteDemo()">حذف البيانات التجريبية</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Mobile nav -->
+  <nav class="mobilenav">
+    <button class="active" data-view="overview" onclick="go('overview')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg> الرئيسية
+    </button>
+    <button data-view="orders" onclick="go('orders')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg> الطلبات
+      <span class="badge hidden" id="mobOrders">0</span>
+    </button>
+    <button data-view="maint" onclick="go('maint')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1z"/></svg> الصيانة
+      <span class="badge hidden" id="mobMaint">0</span>
+    </button>
+    <button data-view="products" onclick="go('products')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/></svg> المنتجات
+    </button>
+    <button data-view="settings" onclick="go('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.3.6.9 1 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> الإعدادات
+    </button>
+  </nav>
+</div>
+
+<!-- ================= DETAIL MODAL ================= -->
+<div id="detailModal" class="modal hidden" onclick="if(event.target===this)closeDetail()">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <h3 id="dTitle">تفاصيل الطلب</h3>
+        <div class="ref" id="dRef" style="margin-top:3px"></div>
+      </div>
+      <button class="x" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="sheet-body" id="dBody"></div>
+    <div class="sheet-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeDetail()">إغلاق</button>
+      <button class="btn btn-ok btn-sm" id="dSave" onclick="saveDetail()">حفظ التعديلات</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRODUCT MODAL ================= -->
+<div id="productModal" class="modal hidden" onclick="if(event.target===this)closeProductModal()">
+  <div class="sheet" style="max-width:520px">
+    <div class="sheet-head">
+      <h3 id="pModalTitle">منتج جديد</h3>
+      <button class="x" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="sheet-body">
+      <input type="hidden" id="pId">
+      <label class="lbl">اسم المنتج *</label>
+      <input class="inp" id="pTitle" placeholder="مثال: خلاط Silver Crest SC-1589">
+      <div class="row mt" style="gap:12px;align-items:flex-start">
+        <div style="flex:1;min-width:140px"><label class="lbl">السعر *</label><input class="inp" id="pPrice" placeholder="850 جنيه"></div>
+        <div style="flex:1;min-width:140px"><label class="lbl">التصنيف</label><input class="inp" id="pCat" placeholder="عروض / رمضان…" list="catList">
+          <datalist id="catList"></datalist>
+        </div>
+      </div>
+      <label class="lbl mt">الوصف</label>
+      <textarea class="inp" id="pDesc" rows="3" placeholder="وصف مختصر للمنتج…"></textarea>
+      <label class="lbl mt">صورة المنتج</label>
+      <div class="row">
+        <label class="btn btn-ghost btn-sm" style="margin:0">📷 اختيار صورة
+          <input type="file" accept="image/*" hidden onchange="handleProductImage(event)">
+        </label>
+        <span class="hint" id="pImgName" style="font-size:11px;color:var(--faint)">بدون صورة</span>
+      </div>
+      <div class="mt" style="display:flex;justify-content:center;background:#f8fafc;border-radius:14px;padding:10px;min-height:90px">
+        <img id="pPreview" style="max-height:150px;max-width:100%;display:none;object-fit:contain">
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeProductModal()">إلغاء</button>
+      <button class="btn btn-brand btn-sm" onclick="saveProduct()">حفظ ونشر</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CONFIRM ================= -->
+<div id="confirmModal" class="modal hidden" onclick="if(event.target===this)closeConfirm()">
+  <div class="sheet" style="max-width:400px">
+    <div class="sheet-body" style="text-align:center;padding:30px 24px">
+      <div style="width:54px;height:54px;border-radius:50%;background:#fef2f2;color:var(--danger);display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      </div>
+      <div style="font-weight:900;font-size:15px" id="confirmTitle">تأكيد</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-top:7px" id="confirmMsg"></div>
+      <div class="row mt" style="justify-content:center;margin-top:18px">
+        <button class="btn btn-ghost btn-sm" onclick="closeConfirm()">تراجع</button>
+        <button class="btn btn-danger btn-sm" id="confirmYes">نعم، احذف</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox / toast -->
+<div id="lightbox" class="lightbox hidden" onclick="this.classList.add('hidden')">
+  <button class="close">✕</button><img id="lightboxImg" src="" alt="">
+</div>
+<div id="toast" class="toast"><span class="ti" id="toastIcon">✓</span><span id="toastMsg"></span></div>
+
+<script>
+/* =========================================================================
+   مركز المهندس الشامل — Dashboard Pro v2
+   API-first: كل البيانات من قاعدة البيانات على السيرفر (localStorage = كاش فقط)
+   ========================================================================= */
+'use strict';
+
+const API = '/api';
+const POLL_MS = 4000;
+const ORDER_STATUS = ['جديد', 'قيد المراجعة', 'تم التواصل', 'تم التأكيد', 'تم الشحن', 'مكتمل', 'ملغي'];
+const MAINT_STATUS = ['جديد', 'قيد المراجعة', 'قيد الصيانة', 'جاهز', 'تم التسليم', 'ملغي'];
+const ST_CLASS = {
+  'جديد':'new','قيد المراجعة':'review','تم التواصل':'contact','تم التأكيد':'confirm',
+  'تم الشحن':'ship','مكتمل':'done','ملغي':'cancel','قيد الصيانة':'repair','جاهز':'ready','تم التسليم':'delivered'
+};
+const ADMIN_WA = '201007889396';
+
+const S = {
+  token: localStorage.getItem('mhs_token') || '',
+  view: 'overview',
+  stats: null,
+  orders: [],
+  maint: [],
+  products: [],
+  ordersLimit: 100,
+  todayOnly: { orders: false, maint: false },
+  lastSync: null,
+  fails: 0,
+  timer: null,
+  lastCounts: { orders: 0, maint: 0 },
+  firstLoad: true,
+  detail: null,
+  pendingImage: null,
+  sound: localStorage.getItem('mhs_sound') !== '0',
+};
+
+/* ------------------------------ utils ------------------------------ */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = (iso) => {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    if (isNaN(d)) return String(iso).slice(0, 10);
+    return d.toLocaleDateString('ar-EG', { year:'numeric', month:'short', day:'numeric' }) + ' · ' +
+           d.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+  } catch { return String(iso).slice(0, 16); }
+};
+const badge = (st, extra='') => `<span class="st ${ST_CLASS[st] || 'demo'} ${extra}">${esc(st)}</span>`;
+const waLink = (phone, text) => {
+  let p = String(phone || '').replace(/[^\d+]/g, '');
+  if (p.startsWith('0')) p = '20' + p.slice(1);
+  else if (p.startsWith('+')) p = p.slice(1);
+  return `https://wa.me/${p}?text=${encodeURIComponent(text || '')}`;
+};
+function toast(msg, type = 'ok', ms = 3200) {
+  const t = $('toast');
+  $('toastMsg').textContent = msg;
+  $('toastIcon').textContent = type === 'err' ? '!' : type === 'warn' ? 'i' : '✓';
+  t.className = 'toast show' + (type === 'err' ? ' err' : type === 'warn' ? ' warn' : '');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), ms);
+}
+function confirmAction(title, msg, fn) {
+  $('confirmTitle').textContent = title;
+  $('confirmMsg').textContent = msg;
+  const btn = $('confirmYes');
+  const clone = btn.cloneNode(true);
+  btn.replaceWith(clone);
+  clone.onclick = () => { closeConfirm(); fn(); };
+  $('confirmModal').classList.remove('hidden');
+}
+function closeConfirm() { $('confirmModal').classList.add('hidden'); }
+
+/* ------------------------------ API ------------------------------ */
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  if (S.token) headers['Authorization'] = 'Bearer ' + S.token;
+  const res = await fetch(API + path, { ...opts, headers });
+  let data = null;
+  try { data = await res.json(); } catch {}
+  if (res.status === 401 && S.token) {
+    // session expired
+    if (!opts._noLogout) { doLogoutLocal(); }
+    throw new Error((data && data.error) || 'انتهت الجلسة');
+  }
+  if (!res.ok || (data && data.ok === false)) {
+    throw new Error((data && data.error) || 'خطأ في الاتصال');
+  }
+  setOnline(true);
+  return data.data;
+}
+
+function setOnline(on) {
+  const pill = $('livePill');
+  if (!pill) return;
+  if (on) {
+    S.fails = 0;
+    pill.classList.remove('off');
+    $('liveText').textContent = 'متصل';
+    const d = $('loginDot'); if (d) { d.className = 'conn-dot on'; $('loginConn').textContent = 'متصل بقاعدة البيانات'; }
+  } else {
+    S.fails++;
+    if (S.fails >= 2) {
+      pill.classList.add('off');
+      $('liveText').textContent = 'غير متصل — إعادة المحاولة…';
+      const d = $('loginDot'); if (d) { d.className = 'conn-dot off'; $('loginConn').textContent = 'انقطع الاتصال'; }
+    }
+  }
+}
+
+/* ------------------------------ auth ------------------------------ */
+function togglePeek() {
+  const i = $('loginPass');
+  i.type = i.type === 'password' ? 'text' : 'password';
+}
+async function doLogin(e) {
+  e.preventDefault();
+  const pass = $('loginPass').value;
+  const btn = $('loginBtn');
+  btn.disabled = true; btn.textContent = 'جاري التحقق…';
+  try {
+    const data = await api('/auth/login', { method: 'POST', body: JSON.stringify({ password: pass }) });
+    S.token = data.token;
+    localStorage.setItem('mhs_token', S.token);
+    $('loginPass').value = '';
+    $('loginErr').classList.remove('show');
+    enterApp();
+    toast('أهلاً بك في لوحة التحكم 🎉');
+  } catch (err) {
+    $('loginErr').textContent = err.message;
+    $('loginErr').classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'دخول اللوحة <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>';
+  }
+}
+function doLogoutLocal() {
+  S.token = '';
+  localStorage.removeItem('mhs_token');
+  if (S.timer) clearInterval(S.timer);
+  $('app').classList.add('hidden');
+  $('loginScreen').classList.remove('hidden');
+}
+function logout() {
+  confirmAction('تسجيل الخروج', 'هل تريد إنهاء الجلسة الحالية؟', () => { doLogoutLocal(); toast('تم تسجيل الخروج'); });
+}
+async function enterApp() {
+  $('loginScreen').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  applySettingsUI();
+  await refreshNow();
+  go('overview');
+  if (S.timer) clearInterval(S.timer);
+  S.timer = setInterval(tickPoll, POLL_MS);
+  requestNotifPermission();
+}
+
+/* ------------------------------ polling ------------------------------ */
+async function tickPoll() {
+  if (document.hidden) return; // توفير البيانات والبطارية
+  try { await loadCore(true); } catch { setOnline(false); }
+}
+async function refreshNow() {
+  const b = $('refreshBtn');
+  b.classList.add('spin');
+  try {
+    await loadCore(false);
+    toast('تم التحديث ✓');
+  } catch (e) {
+    setOnline(false);
+    toast(e.message || 'تعذر التحديث', 'err');
+  } finally {
+    setTimeout(() => b.classList.remove('spin'), 500);
+  }
+}
+async function loadCore(silent) {
+  const [stats, orders, maint, products] = await Promise.all([
+    api('/stats'),
+    api('/orders?limit=500'),
+    api('/maintenance?limit=500'),
+    api('/products'),
+  ]);
+  const prevOrders = S.lastCounts.orders;
+  const prevMaint = S.lastCounts.maint;
+
+  S.stats = stats;
+  S.orders = orders.items || [];
+  S.maint = maint.items || [];
+  S.products = products || [];
+  S.lastSync = new Date();
+
+  // new order arrived from another device?
+  const newO = S.orders.length - prevOrders;
+  const newM = S.maint.length - prevMaint;
+  if (!S.firstLoad && (newO > 0 || newM > 0)) {
+    const msg = newO > 0
+      ? `🔔 طلب شراء جديد: ${S.orders[0].customer_name} — ${S.orders[0].product_title}`
+      : `🔔 طلب صيانة جديد: ${S.maint[0].name} — ${S.maint[0].device || ''}`;
+    notifyNew(msg);
+  }
+  S.lastCounts = { orders: S.orders.length, maint: S.maint.length };
+  S.firstLoad = false;
+  setOnline(true);
+
+  renderAll();
+  if (!silent) { /* full refresh already toasts */ }
+}
+
+/* ------------------------------ notifications ------------------------------ */
+function requestNotifPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') { setSwitch('swNotif', true); }
+}
+function toggleNotif() {
+  if (!('Notification' in window)) { toast('المتصفح لا يدعم الإشعارات', 'warn'); return; }
+  if (Notification.permission === 'granted') {
+    const on = $('swNotif').classList.toggle('on');
+    localStorage.setItem('mhs_notif', on ? '1' : '0');
+    if (on) testNotification();
+  } else {
+    Notification.requestPermission().then(p => {
+      if (p === 'granted') { $('swNotif').classList.add('on'); localStorage.setItem('mhs_notif','1'); testNotification(); toast('تم تفعيل الإشعارات ✓'); }
+      else toast('تم رفض الإشعارات من المتصفح', 'warn');
+    });
+  }
+}
+function setSwitch(id, on) { $(id).classList.toggle('on', !!on); }
+function toggleSwitch(el, key) {
+  const on = el.classList.toggle('on');
+  if (key === 'sound') { S.sound = on; localStorage.setItem('mhs_sound', on ? '1' : '0'); }
+}
+function applySettingsUI() {
+  setSwitch('swSound', S.sound);
+  setSwitch('swNotif', localStorage.getItem('mhs_notif') === '1' && 'Notification' in window && Notification.permission === 'granted');
+  $('sysApi').textContent = API;
+}
+function beep() {
+  if (!S.sound) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const play = (t0, freq) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = freq; o.type = 'sine';
+      g.gain.setValueAtTime(0.001, ctx.currentTime + t0);
+      g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t0 + 0.35);
+      o.start(ctx.currentTime + t0); o.stop(ctx.currentTime + t0 + 0.4);
+    };
+    play(0, 880); play(0.18, 1174);
+  } catch {}
+}
+function notifyNew(msg) {
+  toast(msg, 'warn', 5000);
+  beep();
+  if ('Notification' in window && Notification.permission === 'granted' && localStorage.getItem('mhs_notif') === '1') {
+    try { new Notification('مركز المهندس — طلب جديد', { body: msg, icon: 'assets/logo-circle.jpg', tag: 'mhs-order' }); } catch {}
+  }
+  if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
+}
+function testNotification() {
+  beep();
+  toast('🔔 ده تجريبي للتنبيه — الجديد بيظهر بنفس الشكل', 'warn', 4000);
+}
+
+/* ------------------------------ router ------------------------------ */
+const VIEW_META = {
+  overview: ['نظرة عامة', 'ملخص أداء المتجر لحظة بلحظة'],
+  orders: ['طلبات الشراء', 'كل الطلبات من كل الأجهزة في جدول واحد'],
+  maint: ['طلبات الصيانة', 'طلبات الأعطال مع الصور وحالتها'],
+  products: ['المنتجات', 'إدارة كتالوج المتجر والأسعار'],
+  settings: ['الإعدادات', 'الأمان والنسخ الاحتياطي وحالة النظام'],
+};
+function go(v) {
+  S.view = v;
+  document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+  $('view-' + v).classList.remove('hidden');
+  document.querySelectorAll('.nav-btn, .mobilenav button').forEach(b =>
+    b.classList.toggle('active', b.dataset.view === v));
+  $('pageTitle').textContent = VIEW_META[v][0];
+  $('pageCrumb').textContent = VIEW_META[v][1];
+  renderAll();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ------------------------------ render hub ------------------------------ */
+function renderAll() {
+  if (!S.stats) return;
+  renderKPIs();
+  renderStatusBars();
+  renderRecent();
+  renderOrders();
+  renderMaint();
+  renderProducts();
+  renderSystem();
+  updateBadges();
+  drawActivityChart();
+}
+
+function renderKPIs() {
+  const k = S.stats.kpi;
+  const set = (id, v) => { const el = $(id); if (el) el.firstChild ? el.childNodes[0].textContent = v : el.textContent = v; };
+  $('kpiToday').textContent = k.ordersToday;
+  $('kpiPending').textContent = k.pendingOrders + k.pendingMaint;
+  $('kpiOrders').textContent = k.ordersTotal;
+  $('kpiMaint').textContent = k.maintTotal;
+  $('kpiVisits').textContent = k.visitsTotal.toLocaleString('ar-EG');
+  $('kpiRevenue').innerHTML = k.revenue.toLocaleString('ar-EG') + '<small>ج.م</small>';
+
+  $('kpiTodayDelta').textContent = k.ordersToday ? `+${k.ordersToday} اليوم ✓` : 'لا طلبات اليوم بعد';
+  $('kpiPendingDelta').textContent = k.pendingOrders ? `${k.pendingOrders} شراء بانتظار المتابعة` : 'الكل متابع ✓';
+  $('kpiOrdersDelta').textContent = `${k.ordersWeek} هذا الأسبوع`;
+  $('kpiMaintDelta').textContent = `${k.maintWeek} هذا الأسبوع`;
+  $('kpiVisitsDelta').textContent = k.visitsToday ? `اليوم: ${k.visitsToday}` : 'معدل التحويل ' + k.conversion + '%';
+  $('kpiRevenueDelta').textContent = 'تحويل ' + k.conversion + '% من الزيارات';
+
+  // settings system counts
+  const c = $('sysCounts');
+  if (c) c.textContent = `${k.ordersTotal} / ${k.maintTotal} / ${k.productsTotal}`;
+}
+
+function renderStatusBars() {
+  const bd = S.stats.statusBreakdown || {};
+  const keys = ORDER_STATUS.filter(s => bd[s]);
+  const total = keys.reduce((a, s) => a + bd[s], 0) || 1;
+  const colors = { 'جديد':'#3b82f6','قيد المراجعة':'#f59e0b','تم التواصل':'#6366f1','تم التأكيد':'#06b6d4','تم الشحن':'#8b5cf6','مكتمل':'#10b981','ملغي':'#ef4444' };
+  const box = $('statusBars');
+  if (!keys.length) { box.innerHTML = '<div class="empty" style="padding:24px">لا توجد طلبات بعد</div>'; return; }
+  box.innerHTML = keys.map(s => `
+    <div class="bar-row">
+      <span class="nm">${s}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${Math.round(bd[s]/total*100)}%;background:${colors[s]||'#94a3b8'}"></span></span>
+      <span class="ct">${bd[s]}</span>
+    </div>`).join('');
+}
+
+function renderRecent() {
+  const ro = (S.stats.recentOrders || []).slice(0, 6);
+  const rm = (S.stats.recentMaint || []).slice(0, 6);
+  $('recentOrdersTable').querySelector('tbody').innerHTML = ro.length ? ro.map(o => `
+    <tr onclick="openDetail('order',${o.id})">
+      <td><div class="cell-main">${esc(o.customer_name)}</div><div class="cell-sub">${esc(o.phone)}</div></td>
+      <td><div style="max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700">${esc(o.product_title)}</div><div class="cell-sub price">${esc(o.price||'')}</div></td>
+      <td>${badge(o.status)}${o.source==='demo'?' <span class="st demo">تجريبي</span>':''}</td>
+    </tr>`).join('') : '<tr><td colspan="3"><div class="empty" style="padding:22px">لا توجد طلبات بعد — اطلب من الموقع وهتظهر هنا فوراً</div></td></tr>';
+
+  $('recentMaintTable').querySelector('tbody').innerHTML = rm.length ? rm.map(m => `
+    <tr onclick="openDetail('maint',${m.id})">
+      <td><div class="cell-main">${esc(m.name)}</div><div class="cell-sub">${esc(m.phone)}</div></td>
+      <td><div class="cell-main" style="font-size:12.5px">${esc(m.device||'—')}</div><div class="cell-sub">${esc((m.description||'').slice(0,44))}${(m.description||'').length>44?'…':''}</div></td>
+      <td>${badge(m.status)}</td>
+    </tr>`).join('') : '<tr><td colspan="3"><div class="empty" style="padding:22px">لا توجد طلبات صيانة بعد</div></td></tr>';
+}
+
+function updateBadges() {
+  const o = S.orders.length, m = S.maint.length, p = S.products.length;
+  const setB = (id, n) => { const el = $(id); if (!el) return; el.textContent = n; el.classList.toggle('zero', n === 0); };
+  setB('navOrders', o); setB('navMaint', m); setB('navProducts', p);
+  const mo = $('mobOrders'), mm = $('mobMaint');
+  if (mo) { mo.textContent = o; mo.classList.toggle('hidden', o === 0); }
+  if (mm) { mm.textContent = m; mm.classList.toggle('hidden', m === 0); }
+}
+
+/* ------------------------------ charts ------------------------------ */
+function drawActivityChart() {
+  const cv = $('chartActivity');
+  if (!cv || !S.stats || !S.stats.series) return;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = cv.parentElement.getBoundingClientRect();
+  const W = Math.max(rect.width, 280), H = Math.max(rect.height, 200);
+  cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const series = S.stats.series;
+  const pad = { t: 14, r: 10, b: 26, l: 34 };
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+  const maxV = Math.max(4, ...series.map(s => Math.max(s.orders * 2.2, s.visits)));
+  const x = i => pad.l + (series.length > 1 ? i * iw / (series.length - 1) : iw / 2);
+  const y = v => pad.t + ih - (v / maxV) * ih;
+
+  // grid + y labels
+  ctx.strokeStyle = '#eef1f7'; ctx.fillStyle = '#94a3b8'; ctx.lineWidth = 1;
+  ctx.font = '10px Tajawal, sans-serif'; ctx.textAlign = 'left';
+  for (let g = 0; g <= 4; g++) {
+    const v = maxV * g / 4, yy = y(v);
+    ctx.beginPath(); ctx.moveTo(pad.l, yy); ctx.lineTo(W - pad.r, yy); ctx.stroke();
+    ctx.fillText(String(Math.round(v)), 4, yy + 3);
+  }
+  // x labels (every 2nd day)
+  ctx.textAlign = 'center';
+  series.forEach((s, i) => {
+    if (i % 2 !== 0 && i !== series.length - 1) return;
+    ctx.fillText(s.day.slice(5).replace('-', '/'), x(i), H - 8);
+  });
+
+  const drawLine = (key, color, fill) => {
+    ctx.beginPath();
+    series.forEach((s, i) => { const xx = x(i), yy = y(s[key]); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); });
+    if (fill) {
+      const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + ih);
+      grad.addColorStop(0, fill); grad.addColorStop(1, fill.replace(/[\d.]+\)$/, '0)'));
+      ctx.save(); ctx.lineTo(x(series.length - 1), pad.t + ih); ctx.lineTo(x(0), pad.t + ih); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill(); ctx.restore();
+      ctx.beginPath();
+      series.forEach((s, i) => { const xx = x(i), yy = y(s[key]); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); });
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = 2.4; ctx.lineJoin = 'round'; ctx.stroke();
+    // dots
+    series.forEach((s, i) => {
+      ctx.beginPath(); ctx.arc(x(i), y(s[key]), 2.6, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff'; ctx.fill();
+      ctx.strokeStyle = color; ctx.lineWidth = 1.8; ctx.stroke();
+    });
+  };
+  drawLine('visits', '#f59e0b', 'rgba(245,158,11,.14)');
+  drawLine('orders', '#d11a22', 'rgba(209,26,34,.14)');
+}
+window.addEventListener('resize', () => { clearTimeout(window._rz); window._rz = setTimeout(drawActivityChart, 200); });
+
+/* ------------------------------ clock ------------------------------ */
+setInterval(() => {
+  const el = $('liveClock');
+  if (el) el.textContent = new Date().toLocaleTimeString('ar-EG');
+}, 1000);
+
+/* =========================================================================
+   Views: Orders / Maintenance / Products / Settings
+   ========================================================================= */
+
+/* ------------------------------ ORDERS ------------------------------ */
+function filteredOrders() {
+  const q = ($('ordersSearch').value || '').toLowerCase().trim();
+  const st = $('ordersStatus').value;
+  let list = S.orders;
+  if (st) list = list.filter(o => o.status === st);
+  if (S.todayOnly.orders) {
+    const today = new Date().toISOString().slice(0, 10);
+    list = list.filter(o => String(o.created_at || '').slice(0, 10) === today);
+  }
+  if (q) list = list.filter(o =>
+    (o.customer_name + ' ' + o.phone + ' ' + o.product_title + ' ' + (o.ref || '') + ' ' + (o.address || '')).toLowerCase().includes(q));
+  return list;
+}
+function renderOrders() {
+  if (!S.stats) return;
+  const sel = $('ordersStatus');
+  if (sel.options.length <= 1) {
+    ORDER_STATUS.forEach(s => sel.add(new Option(s, s)));
+  }
+  const list = filteredOrders();
+  const shown = list.slice(0, S.ordersLimit);
+  const body = $('ordersBody');
+
+  body.innerHTML = shown.map((o, i) => `
+    <tr onclick="openDetail('order',${o.id})">
+      <td class="ref" style="color:#cbd5e1">${i + 1}</td>
+      <td><span class="ref">${esc(o.ref || o.id)}</span>${o.source === 'demo' ? '<div class="cell-sub">بيانات تجريبية</div>' : ''}</td>
+      <td>
+        <div class="cell-main"><span class="avatar-sm">${esc((o.customer_name || '؟').trim()[0])}</span>${esc(o.customer_name)}</div>
+        <div class="cell-sub" style="direction:ltr;text-align:right;display:inline-block;padding-inline-start:41px">${esc(o.phone)}</div>
+      </td>
+      <td>
+        <div class="cell-main" style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(o.product_title)}</div>
+        <div class="cell-sub">${esc(o.address || '—')}</div>
+      </td>
+      <td class="price">${esc(o.price || '—')}</td>
+      <td><div class="cell-main" style="font-size:12px">${fmtDate(o.created_at)}</div></td>
+      <td onclick="event.stopPropagation()">
+        <select class="filter" style="padding:6px 8px;font-size:11.5px" onchange="changeStatus('order',${o.id},this.value)">
+          ${ORDER_STATUS.map(s => `<option ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td onclick="event.stopPropagation()">
+        <div class="acts">
+          <a class="act wa" title="واتساب العميل" href="${waLink(o.phone, `مرحباً ${o.customer_name}، بخصوص طلبك: ${o.product_title} 📦`)}" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.2-4.8-4.4-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5l.9 2.2c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1c.2-.3.5-.2.8-.1l2 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3z"/></svg>
+          </a>
+          <button class="act" title="عرض التفاصيل" onclick="openDetail('order',${o.id})">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button class="act del" title="حذف" onclick="event.stopPropagation();deleteItem('order',${o.id})">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`).join('');
+
+  $('ordersEmpty').classList.toggle('hidden', list.length > 0);
+  $('ordersTable').parentElement.style.display = list.length ? '' : 'none';
+  $('ordersCount').textContent = `${list.length} طلب${list.length !== shown.length ? ` — معروض ${shown.length}` : ''}`;
+  $('ordersMore').style.display = list.length > shown.length ? '' : 'none';
+}
+
+/* ------------------------------ MAINTENANCE ------------------------------ */
+function filteredMaint() {
+  const q = ($('maintSearch').value || '').toLowerCase().trim();
+  const st = $('maintStatus').value;
+  let list = S.maint;
+  if (st) list = list.filter(m => m.status === st);
+  if (q) list = list.filter(m =>
+    (m.name + ' ' + m.phone + ' ' + (m.device || '') + ' ' + (m.description || '') + ' ' + (m.ref || '')).toLowerCase().includes(q));
+  return list;
+}
+function renderMaint() {
+  if (!S.stats) return;
+  const sel = $('maintStatus');
+  if (sel.options.length <= 1) MAINT_STATUS.forEach(s => sel.add(new Option(s, s)));
+  const list = filteredMaint();
+  const body = $('maintBody');
+
+  body.innerHTML = list.map((m, i) => {
+    let imgs = [];
+    try { imgs = JSON.parse(m.fault_images || '[]'); } catch {}
+    return `
+    <tr onclick="openDetail('maint',${m.id})">
+      <td class="ref" style="color:#cbd5e1">${i + 1}</td>
+      <td><span class="ref">${esc(m.ref || m.id)}</span></td>
+      <td>
+        <div class="cell-main"><span class="avatar-sm" style="background:#fdf4ff;color:#a21caf">${esc((m.name || '؟').trim()[0])}</span>${esc(m.name)}</div>
+        <div class="cell-sub" style="direction:ltr;text-align:right;display:inline-block;padding-inline-start:41px">${esc(m.phone)}</div>
+      </td>
+      <td>
+        <div class="cell-main">${esc(m.device || '—')}</div>
+        <div class="cell-sub" style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc((m.description || '').slice(0, 60))}</div>
+      </td>
+      <td onclick="event.stopPropagation()">
+        ${imgs.length ? `<div class="thumbs">${imgs.slice(0, 2).map(src => `<img src="${esc(src)}" onclick="event.stopPropagation();openLightbox('${esc(src)}')" onerror="this.style.opacity=.3">`).join('')}${imgs.length > 2 ? `<span class="cell-sub">+${imgs.length - 2}</span>` : ''}</div>` : '<span class="cell-sub">بدون صور</span>'}
+      </td>
+      <td><div class="cell-main" style="font-size:12px">${fmtDate(m.created_at)}</div></td>
+      <td onclick="event.stopPropagation()">
+        <select class="filter" style="padding:6px 8px;font-size:11.5px" onchange="changeStatus('maint',${m.id},this.value)">
+          ${MAINT_STATUS.map(s => `<option ${s === m.status ? 'selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td onclick="event.stopPropagation()">
+        <div class="acts">
+          <a class="act wa" title="واتساب العميل" href="${waLink(m.phone, `مرحباً ${m.name}، بخصوص طلب الصيانة: ${m.device || ''} 🔧`)}" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.2-4.8-4.4-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5l.9 2.2c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1c.2-.3.5-.2.8-.1l2 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3z"/></svg>
+          </a>
+          <button class="act" onclick="openDetail('maint',${m.id})" title="التفاصيل">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button class="act del" title="حذف" onclick="event.stopPropagation();deleteItem('maint',${m.id})">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  $('maintEmpty').classList.toggle('hidden', list.length > 0);
+  $('maintTable').parentElement.style.display = list.length ? '' : 'none';
+  $('maintCount').textContent = `${list.length} طلب صيانة`;
+}
+
+/* ------------------------------ PRODUCTS ------------------------------ */
+function renderProducts() {
+  if (!S.stats) return;
+  const q = ($('prodSearch').value || '').toLowerCase().trim();
+  const cat = $('prodCat').value;
+  const cats = [...new Set(S.products.map(p => p.category).filter(Boolean))];
+  const sel = $('prodCat');
+  if (sel.options.length <= 1) cats.forEach(c => sel.add(new Option(c, c)));
+  const dl = $('catList');
+  if (dl) dl.innerHTML = cats.map(c => `<option value="${esc(c)}">`).join('');
+
+  let list = S.products;
+  if (cat) list = list.filter(p => p.category === cat);
+  if (q) list = list.filter(p => (p.title + ' ' + (p.category || '') + ' ' + (p.price || '')).toLowerCase().includes(q));
+
+  $('prodGrid').innerHTML = list.map(p => `
+    <div class="prod-card">
+      <div class="prod-img">
+        ${p.category ? `<span class="prod-cat">${esc(p.category)}</span>` : ''}
+        ${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span style=\'color:#cbd5e1;font-size:40px\'>📦</span>'">` : '<span style="color:#cbd5e1;font-size:40px">📦</span>'}
+      </div>
+      <div class="prod-body">
+        <div class="prod-title" title="${esc(p.title)}">${esc(p.title)}</div>
+        <div class="prod-price">${esc(p.price || '—')}</div>
+      </div>
+      <div class="prod-foot">
+        <button class="btn btn-ghost btn-sm" onclick="openProductModal(${p.id})">تعديل</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem('product',${p.id})">حذف</button>
+      </div>
+    </div>`).join('');
+
+  $('prodEmpty').classList.toggle('hidden', list.length > 0);
+  $('prodGrid').style.display = list.length ? '' : 'none';
+}
+
+function openProductModal(id) {
+  const p = id ? S.products.find(x => x.id === id) : null;
+  $('pModalTitle').textContent = p ? 'تعديل منتج' : 'منتج جديد';
+  $('pId').value = p ? p.id : '';
+  $('pTitle').value = p ? p.title : '';
+  $('pPrice').value = p ? (p.price || '') : '';
+  $('pCat').value = p ? (p.category || '') : '';
+  $('pDesc').value = p ? (p.description || '') : '';
+  S.pendingImage = null;
+  const prev = $('pPreview');
+  if (p && p.image && !String(p.image).startsWith('data:')) { prev.src = p.image; prev.style.display = ''; }
+  else if (p && p.image) { prev.src = p.image; prev.style.display = ''; }
+  else { prev.style.display = 'none'; prev.removeAttribute('src'); }
+  $('pImgName').textContent = p ? 'الصورة الحالية محفوظة' : 'بدون صورة';
+  $('productModal').classList.remove('hidden');
+  setTimeout(() => $('pTitle').focus(), 80);
+}
+function closeProductModal() { $('productModal').classList.add('hidden'); }
+function handleProductImage(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (f.size > 6 * 1024 * 1024) { toast('الصورة أكبر من 6 ميجا', 'err'); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    // client-side shrink
+    const img = new Image();
+    img.onload = () => {
+      const max = 900;
+      const scale = Math.min(1, max / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * scale);
+      cv.height = Math.round(img.height * scale);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      S.pendingImage = cv.toDataURL('image/jpeg', 0.82);
+      $('pPreview').src = S.pendingImage;
+      $('pPreview').style.display = '';
+      $('pImgName').textContent = f.name + ' ✓';
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(f);
+}
+async function saveProduct() {
+  const title = $('pTitle').value.trim();
+  if (title.length < 2) { toast('اكتب اسم المنتج', 'err'); return; }
+  const body = {
+    title, price: $('pPrice').value.trim(), category: $('pCat').value.trim(),
+    description: $('pDesc').value.trim(),
+  };
+  const id = $('pId').value;
+  if (S.pendingImage) body.image = S.pendingImage;
+  try {
+    if (id) await api('/products/' + id, { method: 'PUT', body: JSON.stringify(body) });
+    else await api('/products', { method: 'POST', body: JSON.stringify(body) });
+    closeProductModal();
+    await loadCore(true);
+    toast(id ? 'تم تحديث المنتج ✓' : 'تمت إضافة المنتج ونشره على الموقع ✓');
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+/* ------------------------------ DETAIL MODAL ------------------------------ */
+function openDetail(kind, id) {
+  const item = kind === 'order' ? S.orders.find(o => o.id === id) : S.maint.find(m => m.id === id);
+  if (!item) return;
+  S.detail = { kind, id };
+  const statuses = kind === 'order' ? ORDER_STATUS : MAINT_STATUS;
+  $('dTitle').textContent = kind === 'order' ? 'تفاصيل طلب الشراء' : 'تفاصيل طلب الصيانة';
+  $('dRef').textContent = item.ref || ('#' + item.id);
+
+  let imgs = [];
+  if (kind === 'maint') { try { imgs = JSON.parse(item.fault_images || '[]'); } catch {} }
+
+  const rows = kind === 'order' ? `
+    <div class="detail-grid">
+      <div class="dg"><div class="k">اسم العميل</div><div class="v">${esc(item.customer_name)}</div></div>
+      <div class="dg"><div class="k">رقم الهاتف</div><div class="v" style="direction:ltr;text-align:right">${esc(item.phone)}</div></div>
+      <div class="dg full"><div class="k">العنوان</div><div class="v">${esc(item.address || '—')}</div></div>
+      <div class="dg full"><div class="k">المنتج</div><div class="v">${esc(item.product_title)}</div></div>
+      <div class="dg"><div class="k">السعر</div><div class="v price">${esc(item.price || '—')}</div></div>
+      <div class="dg"><div class="k">نوع الطلب</div><div class="v">${esc(item.service_type || 'شراء')}</div></div>
+      <div class="dg"><div class="k">تاريخ الإرسال</div><div class="v">${fmtDate(item.created_at)}</div></div>
+      <div class="dg"><div class="k">الحالة</div><div class="v">${badge(item.status)}</div></div>
+      <div class="dg full"><div class="k">المصدر</div><div class="v">${item.source === 'demo' ? 'بيانات تجريبية (تُحذف من الإعدادات)' : item.source === 'legacy' ? 'مهاجرة من النظام القديم' : 'الموقع الإلكتروني'}</div></div>
+    </div>` : `
+    <div class="detail-grid">
+      <div class="dg"><div class="k">اسم العميل</div><div class="v">${esc(item.name)}</div></div>
+      <div class="dg"><div class="k">رقم الهاتف</div><div class="v" style="direction:ltr;text-align:right">${esc(item.phone)}</div></div>
+      <div class="dg"><div class="k">نوع الجهاز</div><div class="v">${esc(item.device || '—')}</div></div>
+      <div class="dg"><div class="k">التاريخ</div><div class="v">${fmtDate(item.created_at)}</div></div>
+      <div class="dg full"><div class="k">وصف العطل</div><div class="v">${esc(item.description || '—')}</div></div>
+      ${imgs.length ? `<div class="dg full"><div class="k">صور العطل (${imgs.length})</div>
+        <div class="thumbs" style="margin-top:8px">${imgs.map(src => `<img src="${esc(src)}" onclick="openLightbox('${esc(src)}')" onerror="this.style.display='none'">`).join('')}</div></div>` : ''}
+      <div class="dg"><div class="k">الحالة</div><div class="v">${badge(item.status)}</div></div>
+      <div class="dg"><div class="k">المصدر</div><div class="v">${item.source === 'demo' ? 'تجريبي' : 'الموقع'}</div></div>
+    </div>`;
+
+  $('dBody').innerHTML = rows + `
+    <div class="mt">
+      <label class="lbl">تغيير الحالة</label>
+      <div class="timeline" id="dTimeline">
+        ${statuses.map((s, i) => `<button class="tl ${s === item.status ? 'on' : ''}" data-s="${esc(s)}" onclick="pickStatus(this)">${s}</button>`).join('')}
+      </div>
+    </div>
+    <div class="mt">
+      <label class="lbl">ملاحظة داخلية (تظهر للإدارة فقط)</label>
+      <textarea class="inp" id="dNote" rows="2" placeholder="مثال: تم التواصل والعميل هيستلم بكرة…">${esc(item.note || '')}</textarea>
+    </div>
+    <div class="mt row">
+      <a class="btn btn-ok btn-sm" href="${waLink(item.phone, kind === 'order'
+        ? `مرحباً ${item.customer_name} 📦 طلبك "${item.product_title}" قيد التجهيز وسنتواصل معك للتأكيد.`
+        : `مرحباً ${item.name} 🔧 بخصوص طلب الصيانة: ${item.device || ''} — حالة الطلب: ${item.status}`)}" target="_blank" rel="noopener">
+        مراسلة العميل على واتساب
+      </a>
+      ${item.source === 'demo' ? `<button class="btn btn-danger btn-sm" onclick="deleteItem('${kind === 'order' ? 'order' : 'maint'}',${item.id})">حذف هذا الطلب التجريبي</button>` : ''}
+    </div>`;
+  $('detailModal').classList.remove('hidden');
+}
+function pickStatus(btn) {
+  btn.parentElement.querySelectorAll('.tl').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function closeDetail() { $('detailModal').classList.add('hidden'); S.detail = null; }
+async function saveDetail() {
+  if (!S.detail) return;
+  const on = document.querySelector('#dTimeline .tl.on');
+  const status = on ? on.dataset.s : null;
+  const note = $('dNote').value;
+  try {
+    await api(`/${S.detail.kind === 'order' ? 'orders' : 'maintenance'}/${S.detail.id}`, {
+      method: 'PATCH', body: JSON.stringify({ status, note }),
+    });
+    closeDetail();
+    await loadCore(true);
+    toast('تم حفظ التعديلات ✓');
+  } catch (e) { toast(e.message, 'err'); }
+}
+async function changeStatus(kind, id, status) {
+  try {
+    await api(`/${kind === 'order' ? 'orders' : 'maintenance'}/${id}`, {
+      method: 'PATCH', body: JSON.stringify({ status }),
+    });
+    toast(`تم تحديث الحالة إلى: ${status} ✓`);
+    await loadCore(true);
+  } catch (e) { toast(e.message, 'err'); renderOrders(); renderMaint(); }
+}
+function deleteItem(kind, id) {
+  const label = kind === 'order' ? 'طلب الشراء' : kind === 'maint' ? 'طلب الصيانة' : 'المنتج';
+  confirmAction('حذف ' + label, 'هل أنت متأكد؟ لا يمكن التراجع عن الحذف.', async () => {
+    try {
+      const path = kind === 'order' ? '/orders/' + id : kind === 'maint' ? '/maintenance/' + id : '/products/' + id;
+      await api(path, { method: 'DELETE' });
+      closeDetail();
+      await loadCore(true);
+      toast('تم الحذف ✓');
+    } catch (e) { toast(e.message, 'err'); }
+  });
+}
+function openLightbox(src) { $('lightboxImg').src = src; $('lightbox').classList.remove('hidden'); }
+
+/* ------------------------------ filters / export ------------------------------ */
+function toggleToday(kind) {
+  S.todayOnly[kind] = !S.todayOnly[kind];
+  const chip = $('chipTodayOrders');
+  if (chip) chip.classList.toggle('on', S.todayOnly.orders);
+  renderOrders();
+}
+function exportCSV(kind) {
+  let rows, name;
+  if (kind === 'orders') {
+    rows = [['الرقم','العميل','الهاتف','العنوان','المنتج','السعر','التاريخ','الحالة','ملاحظة'],
+      ...filteredOrders().map(o => [o.ref || o.id, o.customer_name, o.phone, o.address || '', o.product_title, o.price || '', fmtDate(o.created_at), o.status, o.note || ''])];
+    name = 'طلبات-الشراء';
+  } else {
+    rows = [['الرقم','العميل','الهاتف','الجهاز','العطل','التاريخ','الحالة','ملاحظة'],
+      ...filteredMaint().map(m => [m.ref || m.id, m.name, m.phone, m.device || '', m.description || '', fmtDate(m.created_at), m.status, m.note || ''])];
+    name = 'طلبات-الصيانة';
+  }
+  const csv = '\uFEFF' + rows.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${name}-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('تم تصدير الملف ✓ (يفتح في Excel بأكواد عربية سليمة)');
+}
+function exportBackup() {
+  api('/backup').then(data => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `mohandis-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('تم تصدير النسخة الاحتياطية ✓');
+  }).catch(e => toast(e.message, 'err'));
+}
+function importBackup(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try {
+      const data = JSON.parse(reader.result);
+      confirmAction('استيراد نسخة احتياطية', `سيتم دمج ${ (data.orders||[]).length } طلب و ${ (data.maintenanceRequests||data.maintenance||[]).length } طلب صيانة. المكرر سيتم تجاهله.`, async () => {
+        try {
+          const r = await api('/import', { method: 'POST', body: JSON.stringify(data) });
+          await loadCore(true);
+          toast(`تم استيراد ${r.imported} سجل ✓`);
+        } catch (e) { toast(e.message, 'err'); }
+      });
+    } catch { toast('الملف غير صالح', 'err'); }
+  };
+  reader.readAsText(f);
+  input.value = '';
+}
+async function changePassword() {
+  const cur = $('curPass').value, nw = $('newPass').value;
+  if (!cur || !nw) { toast('املئ الحقول', 'err'); return; }
+  if (nw.length < 6) { toast('كلمة المرور 6 أحرف على الأقل', 'err'); return; }
+  try {
+    await api('/auth/change-password', { method: 'POST', body: JSON.stringify({ currentPassword: cur, newPassword: nw }) });
+    $('curPass').value = ''; $('newPass').value = '';
+    doLogoutLocal();
+    toast('تم تغيير كلمة المرور — سجّل الدخول من جديد', 'ok', 5000);
+  } catch (e) { toast(e.message, 'err'); }
+}
+function deleteDemo() {
+  confirmAction('حذف البيانات التجريبية', 'سيتم حذف الطلبات وطلبات الصيانة التجريبية فقط — طلباتك الحقيقية لن تُمس.', async () => {
+    try {
+      const r = await api('/demo', { method: 'DELETE' });
+      await loadCore(true);
+      toast(`تم حذف ${r.deletedOrders + r.deletedMaint} سجل تجريبي ✓`);
+    } catch (e) { toast(e.message, 'err'); }
+  });
+}
+function renderSystem() {
+  const cs = $('sysConn');
+  if (cs) cs.textContent = S.fails === 0 ? '● متصل ومستقر' : '● انقطاع مؤقت';
+  const ls = $('lastSyncSet');
+  if (ls && S.lastSync) ls.textContent = S.lastSync.toLocaleTimeString('ar-EG');
+}
+
+/* ------------------------------ boot ------------------------------ */
+async function boot() {
+  applySettingsUI();
+  // ping server
+  try {
+    await fetch(API + '/health');
+    setOnline(true);
+  } catch { setOnline(false); }
+  // try saved session
+  if (S.token) {
+    try {
+      await api('/stats');
+      enterApp();
+      return;
+    } catch { /* show login */ }
+  }
+  $('loginScreen').classList.remove('hidden');
+  setTimeout(() => $('loginPass').focus(), 150);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeDetail(); closeProductModal(); closeConfirm(); $('lightbox').classList.add('hidden'); }
+  if (e.key === 'F5' && !$('app').classList.contains('hidden')) { e.preventDefault(); refreshNow(); }
+});
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S.token) tickPoll(); });
+boot();
+</script>
+</body>
+</html>
