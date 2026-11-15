@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز المهندس - بصورك الحقيقية | مركز المهندس الشامل لصيانة وبيع الأجهزة المنزلية | م/ أحمد مصطفى - النسخة النهائية</title>
+    <title> مركز المهندس الشامل لصيانة وبيع الأجهزة المنزلية | م/ أحمد مصطفى - النسخة النهائية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
@@ -372,14 +372,14 @@
                 <!-- Add Product - FIXED WITH FILE UPLOAD -->
                 <div id="admin-view-add" class="hidden max-w-2xl mx-auto bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                     <h4 class="font-black text-slate-900 mb-1">إضافة منتج جديد للمتجر</h4>
-                    <p class="text-xs text-slate-500 mb-4">✅ تم إصلاح رفع الصور - يمكنك رفع صورة من جهازك (صور Proton Drive) أو لصق رابط مباشر</p>
+                    <p class="text-xs text-slate-500 mb-4">✅ تم إصلاح رفع الصور - يمكنك رفع صورة من جهازك أو لصق رابط مباشر</p>
                     
                     <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 text-xs leading-relaxed">
                         <p class="font-bold text-amber-800 mb-1"><i class="fa-solid fa-circle-info"></i> كيف تضيف صور Proton Drive؟</p>
                         <ol class="list-decimal mr-4 space-y-1 text-amber-900/80">
                             <li>افتح رابط Proton Drive وحمّل الصور على جهازك</li>
                             <li>اضغط "اختر صورة من جهازك" وحدد الصور</li>
-                            <li>سيتم حفظها تلقائياً في المتجر (Base64) وتظهر فوراً للعملاء</li>
+                            <li>سيتم حفظها تلقائياً في المتجر _ وتظهر فوراً للعملاء</li>
                         </ol>
                     </div>
 
@@ -905,7 +905,7 @@
                 time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
                 status: 'قيد المراجعة'
             };
-            maintenanceRequests.unshift(req); saveAll(); e.target.reset(); clearFaultImages('hero'); showToast('تم إرسال طلب الصيانة بنجاح! جارٍ تحويلك لواتساب الإدارة...'); updateAdminCounts(); setTimeout(()=> sendMaintenanceToWhatsApp(req), 400);
+            maintenanceRequests.unshift(req); saveAll(); e.target.reset(); clearFaultImages('hero'); showToast('تم إرسال طلب الصيانة بنجاح! ...'); updateAdminCounts(); setTimeout(()=> sendMaintenanceToWhatsApp(req), 400);
         }
         function handleMainMaintenanceSubmit(e) {
             e.preventDefault();
@@ -921,7 +921,7 @@
                 time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
                 status: 'قيد المراجعة'
             };
-            maintenanceRequests.unshift(req); saveAll(); e.target.reset(); clearFaultImages('main'); showToast('تم استلام طلب الصيانة! جارٍ تحويلك لواتساب الإدارة...'); updateAdminCounts(); setTimeout(()=> sendMaintenanceToWhatsApp(req), 400);
+            maintenanceRequests.unshift(req); saveAll(); e.target.reset(); clearFaultImages('main'); showToast('تم استلام طلب الصيانة! ...'); updateAdminCounts(); setTimeout(()=> sendMaintenanceToWhatsApp(req), 400);
         }
 
         function openOrderModal(productId) {
@@ -941,7 +941,7 @@
             const pId = document.getElementById('modal-product-id').value;
             const p = products.find(item => item.id == pId);
             const order = { id: Date.now(), customerName: document.getElementById('order-name').value.trim(), phone: document.getElementById('order-phone').value.trim(), address: document.getElementById('order-address').value.trim(), productTitle: p.title, productImage: p.image, price: p.price, serviceType: 'شراء', device: p.category, status: 'قيد المراجعة', date: new Date().toLocaleDateString('ar-EG'), time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}) };
-            orders.unshift(order); saveAll(); closeOrderModal(); e.target.reset(); showToast('تم إرسال طلب الشراء! جارٍ تحويلك لواتساب الإدارة للتأكيد...'); updateAdminCounts(); setTimeout(()=> sendOrderToWhatsApp(order), 400);
+            orders.unshift(order); saveAll(); closeOrderModal(); e.target.reset(); showToast('تم إرسال طلب الشراء! جارٍ التتحويل للإدارة للتأكيد...'); updateAdminCounts(); setTimeout(()=> sendOrderToWhatsApp(order), 400);
         }
 
         // ADMIN - تمت إزالة إظهار الباسورد فقط، لكن الدخول ما زال يتطلب كلمة المرور
@@ -950,7 +950,7 @@
         function handleAdminLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-password-input').value;
-            if (pass === 'admin12345') {
+            if (pass === 'admin@12345') {
                 closeAdminAuthModal(); document.getElementById('admin-password-input').value = '';
                 document.getElementById('admin-modal').classList.remove('hidden');
                 loadAdminData();
