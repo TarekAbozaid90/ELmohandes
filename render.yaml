@@ -1,7 +1,7 @@
 # Render Blueprint — يجبر المشروع على Node.js (يحل مشكلة Ruby/Gemfile)
 services:
   - type: web
-    name: mohandis-pro
+    name: ElMohandes
     runtime: node
     branch: main
     plan: free
