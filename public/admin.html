@@ -718,7 +718,9 @@ table.grid tbody tr:last-child td{border-bottom:none}
       <label class="lbl">اسم المنتج *</label>
       <input class="inp" id="pTitle" placeholder="مثال: خلاط Silver Crest SC-1589">
       <div class="row mt" style="gap:12px;align-items:flex-start">
-        <div style="flex:1;min-width:140px"><label class="lbl">السعر *</label><input class="inp" id="pPrice" placeholder="850 جنيه"></div>
+        <div style="flex:1;min-width:140px"><label class="lbl">سعر البيع الحالي *</label><input class="inp" id="pPrice" placeholder="850 جنيه"></div>
+        <div style="flex:1;min-width:140px"><label class="lbl">السعر قبل الخصم</label><input class="inp" id="pOldPrice" placeholder="1000 جنيه" oninput="syncDiscountFromOldPrice()"></div>
+        <div style="flex:1;min-width:140px"><label class="lbl">نسبة الخصم %</label><input class="inp" id="pDiscount" type="number" min="0" max="100" placeholder="15" oninput="syncOldPriceFromDiscount()"></div>
         <div style="flex:1;min-width:140px"><label class="lbl">التصنيف</label><input class="inp" id="pCat" placeholder="عروض / رمضان…" list="catList">
           <datalist id="catList"></datalist>
         </div>
@@ -1354,7 +1356,7 @@ function renderProducts() {
       </div>
       <div class="prod-body">
         <div class="prod-title" title="${esc(p.title)}">${esc(p.title)}</div>
-        <div class="prod-price">${esc(p.price || '—')}</div>
+        <div class="prod-price">${esc(p.price || '—')}</div>${p.old_price ? `<div style="font-size:12px;color:#94a3b8;text-decoration:line-through">${esc(p.old_price)}</div>` : ''}${Number(p.discount_percent)>0 ? `<span style="font-size:11px;color:#dc2626;font-weight:800">خصم ${Number(p.discount_percent)}%</span>` : ''}
       </div>
       <div class="prod-foot">
         <button class="btn btn-ghost btn-sm" onclick="openProductModal(${p.id})">تعديل</button>
@@ -1372,6 +1374,8 @@ function openProductModal(id) {
   $('pId').value = p ? p.id : '';
   $('pTitle').value = p ? p.title : '';
   $('pPrice').value = p ? (p.price || '') : '';
+  $('pOldPrice').value = p ? (p.old_price || '') : '';
+  $('pDiscount').value = p ? (p.discount_percent || '') : '';
   $('pCat').value = p ? (p.category || '') : '';
   $('pDesc').value = p ? (p.description || '') : '';
   S.pendingImage = null;
@@ -1408,11 +1412,14 @@ function handleProductImage(e) {
   };
   reader.readAsDataURL(f);
 }
+function numericPrice(v) { const n = Number(String(v || '').replace(/[^0-9.]/g, '')); return Number.isFinite(n) ? n : 0; }
+function syncDiscountFromOldPrice() { const old = numericPrice($('pOldPrice').value), current = numericPrice($('pPrice').value); if (old > current && current > 0) $('pDiscount').value = Math.round((old-current)/old*100); }
+function syncOldPriceFromDiscount() { const current = numericPrice($('pPrice').value), pct = Math.max(0, Math.min(100, Number($('pDiscount').value)||0)); if (current > 0 && pct > 0 && pct < 100) $('pOldPrice').value = `${Math.round(current/(1-pct/100))} جنيه`; else if (!pct) $('pOldPrice').value = ''; }
 async function saveProduct() {
   const title = $('pTitle').value.trim();
   if (title.length < 2) { toast('اكتب اسم المنتج', 'err'); return; }
   const body = {
-    title, price: $('pPrice').value.trim(), category: $('pCat').value.trim(),
+    title, price: $('pPrice').value.trim(), oldPrice: $('pOldPrice').value.trim(), discountPercent: Math.max(0, Math.min(100, Number($('pDiscount').value)||0)), category: $('pCat').value.trim(),
     description: $('pDesc').value.trim(),
   };
   const id = $('pId').value;

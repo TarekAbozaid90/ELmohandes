@@ -25,3 +25,11 @@
 - `node --check` نجح لملف السيرفر وJavaScript لوحة التحكم.
 - اختبار تكاملي محلي نجح في تسجيل زيارة، وعرض IP بعد تسجيل دخول المدير، وتصدير سجل الزوار واستيراده.
 - اختبار Playwright الكامل لم يُشغّل في بيئة البناء لأن حزمة `playwright` غير مثبتة.
+
+## Product editor and discounts (2026-11-22)
+- Fixed the product management workflow in `/admin`: existing products can be edited, including their current selling price.
+- Added `old_price` and `discount_percent` fields with a safe SQLite migration for existing databases.
+- Product create/update API now persists the old price and discount percentage.
+- The storefront fetches the central product catalog on load, so product price/discount changes made in `/admin` appear to visitors across devices.
+- Product cards and the product detail view display the crossed-out previous price; cards also show the discount percentage when supplied.
+- For an existing deployment, publish the updated project; the server automatically adds the new database columns without deleting existing products.

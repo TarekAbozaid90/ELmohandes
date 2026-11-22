@@ -87,6 +87,8 @@ CREATE TABLE IF NOT EXISTS products (
   legacy_id   TEXT,
   title       TEXT NOT NULL,
   price       TEXT,
+  old_price   TEXT,
+  discount_percent INTEGER DEFAULT 0,
   category    TEXT,
   image       TEXT,
   description TEXT,
@@ -118,6 +120,11 @@ CREATE TABLE IF NOT EXISTS settings (
   value TEXT NOT NULL
 );
 `);
+
+// Safe schema migration for databases created by earlier releases.
+const productColumns = new Set(db.prepare('PRAGMA table_info(products)').all().map(c => c.name));
+if (!productColumns.has('old_price')) db.exec('ALTER TABLE products ADD COLUMN old_price TEXT');
+if (!productColumns.has('discount_percent')) db.exec('ALTER TABLE products ADD COLUMN discount_percent INTEGER DEFAULT 0');
 
 /* ------------------------------ tiny helpers ------------------------------- */
 const nowISO = () => new Date().toISOString();
@@ -435,9 +442,9 @@ route('POST', '/api/products', async (req, res, m, ctx) => {
   if (title.length < 2) return fail(res, 400, 'اسم المنتج مطلوب');
   const image = storeImage(b.image);
   const info = db.prepare(`
-    INSERT INTO products (title, price, category, image, description, active)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run(title, esc(b.price).slice(0, 80), esc(b.category).slice(0, 60), image,
+    INSERT INTO products (title, price, old_price, discount_percent, category, image, description, active)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(title, esc(b.price).slice(0, 80), esc(b.oldPrice ?? b.old_price).slice(0, 80), Math.max(0, Math.min(100, Number(b.discountPercent ?? b.discount_percent) || 0)), esc(b.category).slice(0, 60), image,
          esc(b.description).slice(0, 1000), b.active === false || b.active === 0 ? 0 : 1);
   ok(res, db.prepare('SELECT * FROM products WHERE id = ?').get(info.lastInsertRowid), 201);
 });
@@ -450,11 +457,13 @@ route('PUT', '/api/products/:id', (req, res, m, ctx) => {
   const b = ctx.body;
   const image = b.image !== undefined ? (String(b.image).startsWith('data:') ? storeImage(b.image) : esc(b.image)) : row.image;
   db.prepare(`
-    UPDATE products SET title = ?, price = ?, category = ?, image = ?, description = ?, active = ?, updated_at = ?
+    UPDATE products SET title = ?, price = ?, old_price = ?, discount_percent = ?, category = ?, image = ?, description = ?, active = ?, updated_at = ?
     WHERE id = ?
   `).run(
     b.title !== undefined ? esc(b.title).slice(0, 300) : row.title,
     b.price !== undefined ? esc(b.price).slice(0, 80) : row.price,
+    (b.oldPrice !== undefined || b.old_price !== undefined) ? esc(b.oldPrice ?? b.old_price).slice(0, 80) : row.old_price,
+    (b.discountPercent !== undefined || b.discount_percent !== undefined) ? Math.max(0, Math.min(100, Number(b.discountPercent ?? b.discount_percent) || 0)) : (row.discount_percent || 0),
     b.category !== undefined ? esc(b.category).slice(0, 60) : row.category,
     image,
     b.description !== undefined ? esc(b.description).slice(0, 1000) : row.description,

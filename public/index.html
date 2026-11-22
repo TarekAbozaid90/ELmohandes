@@ -793,8 +793,11 @@
             if (req) sendMaintenanceToWhatsApp(req);
         }
 
-        window.onload = function() {
+        window.onload = async function() {
             document.getElementById('year').innerText = new Date().getFullYear();
+            // Prefer the central catalog so edits made in /admin appear on every device.
+            const cloudCatalog = await fetchFromCloud('products');
+            if (cloudCatalog && cloudCatalog.length) { products = cloudCatalog.map(p => ({ ...p, oldPrice: p.old_price || p.oldPrice || '', discountPercent: Number(p.discount_percent || p.discountPercent || 0) })); saveAll(); }
             renderProducts('all');
             updateAdminCounts();
             if (products.length === 0) { products = [...initialProducts]; saveAll(); }
@@ -838,7 +841,7 @@
                         <div class="relative overflow-hidden bg-slate-100 h-60 flex items-center justify-center">
                             <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='https://placehold.co/600x600/0f2a53/ffffff?text=مركز+المهندس'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-zoom-in" onclick="openProductDetail(${p.id})" title="اضغط للتكبير">
                             <span class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm text-amber-400 font-bold text-xs px-3 py-1 rounded-lg">${p.category}</span>
-                            ${p.oldPrice ? `<span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded-lg">خصم ${p.oldPrice}</span>` : ''}
+                            ${p.discountPercent ? `<span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded-lg">خصم ${p.discountPercent}%</span>` : (p.oldPrice ? `<span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded-lg">عرض خاص</span>` : '')}
                         </div>
                         <div class="p-5">
                             <h3 class="font-extrabold text-sm sm:text-base text-slate-900 leading-snug group-hover:text-[#d11a22] transition-colors cursor-pointer" onclick="openProductDetail(${p.id})">${p.title}</h3>
