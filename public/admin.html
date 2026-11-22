@@ -358,6 +358,10 @@ table.grid tbody tr:last-child td{border-bottom:none}
         <span class="badge zero" id="navProducts">0</span>
       </button>
       <div class="nav-label">النظام</div>
+      <button class="nav-btn" data-view="visitors" onclick="go('visitors')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        الزوار و IP
+      </button>
       <button class="nav-btn" data-view="settings" onclick="go('settings')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.3.6.9 1 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
         الإعدادات
@@ -574,6 +578,39 @@ table.grid tbody tr:last-child td{border-bottom:none}
         </div>
       </section>
 
+      <!-- ===== VISITORS ===== -->
+      <section id="view-visitors" class="view hidden">
+        <div class="kpi-grid">
+          <div class="kpi" style="--k:#0ea5e9;--kb:#e0f2fe">
+            <div class="ico">👁</div><div class="lbl">إجمالي الزيارات المسجلة</div>
+            <div class="val" id="visitorTotal">0</div><div class="delta">منذ تفعيل سجل الزوار</div>
+          </div>
+          <div class="kpi" style="--k:#8b5cf6;--kb:#ede9fe">
+            <div class="ico">🌐</div><div class="lbl">عناوين IP مختلفة</div>
+            <div class="val" id="visitorUnique">0</div><div class="delta">عدد تقريبي للأجهزة / الشبكات المختلفة</div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="visitorSearch" placeholder="ابحث بعنوان IP أو الصفحة…" oninput="renderVisitors()">
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="loadVisitors()">تحديث سجل الزوار</button>
+          <span class="hint">آخر 500 زيارة كحد أقصى في العرض</span>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>سجل الزوار وعناوين IP</h3><span class="hint">توقيت الزيارة · الصفحة · نوع الجهاز</span></div>
+          <div class="table-wrap">
+            <table class="grid" style="min-width:900px">
+              <thead><tr><th>التاريخ والوقت</th><th>عنوان IP</th><th>الصفحة</th><th>الجهاز</th><th>المتصفح / User Agent</th></tr></thead>
+              <tbody id="visitorsTable"></tbody>
+            </table>
+          </div>
+          <div id="visitorsEmpty" class="empty hidden"><div class="t">لا توجد زيارات مسجلة حتى الآن</div><div class="s">سيظهر الزوار الجدد هنا بعد تفعيل النسخة الجديدة.</div></div>
+        </div>
+        <p class="hint" style="margin-top:12px">ملاحظة خصوصية: عنوان IP قد يُعدّ بيانات شخصية. استخدمه لأغراض الحماية والتحليل فقط، وأضف توضيحاً مناسباً في سياسة الخصوصية.</p>
+      </section>
+
       <!-- ===== SETTINGS ===== -->
       <section id="view-settings" class="view hidden">
         <div class="set-grid">
@@ -641,6 +678,9 @@ table.grid tbody tr:last-child td{border-bottom:none}
     </button>
     <button data-view="products" onclick="go('products')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/></svg> المنتجات
+    </button>
+    <button data-view="visitors" onclick="go('visitors')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> الزوار
     </button>
     <button data-view="settings" onclick="go('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.3.6.9 1 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> الإعدادات
@@ -750,6 +790,7 @@ const S = {
   orders: [],
   maint: [],
   products: [],
+  visitors: { items: [], total: 0, uniqueIPs: 0 },
   ordersLimit: 100,
   todayOnly: { orders: false, maint: false },
   lastSync: null,
@@ -887,7 +928,10 @@ async function enterApp() {
 /* ------------------------------ polling ------------------------------ */
 async function tickPoll() {
   if (document.hidden) return; // توفير البيانات والبطارية
-  try { await loadCore(true); } catch { setOnline(false); }
+  try {
+    await loadCore(true);
+    if (S.view === 'visitors') await loadVisitors();
+  } catch { setOnline(false); }
 }
 async function refreshNow() {
   const b = $('refreshBtn');
@@ -998,6 +1042,7 @@ const VIEW_META = {
   orders: ['طلبات الشراء', 'كل الطلبات من كل الأجهزة في جدول واحد'],
   maint: ['طلبات الصيانة', 'طلبات الأعطال مع الصور وحالتها'],
   products: ['المنتجات', 'إدارة كتالوج المتجر والأسعار'],
+  visitors: ['الزوار و IP', 'سجل الزيارات وعناوين IP للأجهزة التي زارت الموقع'],
   settings: ['الإعدادات', 'الأمان والنسخ الاحتياطي وحالة النظام'],
 };
 function go(v) {
@@ -1009,6 +1054,7 @@ function go(v) {
   $('pageTitle').textContent = VIEW_META[v][0];
   $('pageCrumb').textContent = VIEW_META[v][1];
   renderAll();
+  if (v === 'visitors') loadVisitors();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1021,6 +1067,7 @@ function renderAll() {
   renderOrders();
   renderMaint();
   renderProducts();
+  renderVisitors();
   renderSystem();
   updateBadges();
   drawActivityChart();
@@ -1535,6 +1582,32 @@ function importBackup(input) {
   reader.readAsText(f);
   input.value = '';
 }
+async function loadVisitors() {
+  try {
+    S.visitors = await api('/visitors?limit=500');
+    renderVisitors();
+  } catch (e) { toast(e.message || 'تعذر تحميل سجل الزوار', 'err'); }
+}
+function renderVisitors() {
+  const data = S.visitors || { items: [], total: 0, uniqueIPs: 0 };
+  const total = $('visitorTotal'), unique = $('visitorUnique');
+  if (total) total.textContent = Number(data.total || 0).toLocaleString('ar-EG');
+  if (unique) unique.textContent = Number(data.uniqueIPs || 0).toLocaleString('ar-EG');
+  const body = $('visitorsTable');
+  if (!body) return;
+  const q = ($('visitorSearch')?.value || '').trim().toLowerCase();
+  const rows = (data.items || []).filter(v => [v.ip, v.page, v.device, v.user_agent].join(' ').toLowerCase().includes(q));
+  body.innerHTML = rows.map(v => `<tr>
+    <td>${esc(fmtDate(v.created_at))}</td>
+    <td><strong class="ref">${esc(v.ip)}</strong></td>
+    <td><span class="ref">${esc(v.page || '/')}</span></td>
+    <td>${esc(v.device || 'غير محدد')}</td>
+    <td style="max-width:340px;white-space:normal;word-break:break-word"><span class="cell-sub">${esc(v.user_agent || 'غير متاح')}</span></td>
+  </tr>`).join('');
+  $('visitorsEmpty')?.classList.toggle('hidden', rows.length > 0);
+  body.closest('.table-wrap')?.classList.toggle('hidden', rows.length === 0);
+}
+
 async function changePassword() {
   const cur = $('curPass').value, nw = $('newPass').value;
   if (!cur || !nw) { toast('املئ الحقول', 'err'); return; }

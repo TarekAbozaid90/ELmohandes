@@ -101,6 +101,18 @@ CREATE TABLE IF NOT EXISTS visits (
   count INTEGER NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS visitor_logs (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  ip          TEXT NOT NULL,
+  page        TEXT,
+  referrer    TEXT,
+  user_agent  TEXT,
+  device      TEXT,
+  created_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+CREATE INDEX IF NOT EXISTS idx_visitor_logs_created ON visitor_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_visitor_logs_ip ON visitor_logs(ip);
+
 CREATE TABLE IF NOT EXISTS settings (
   key   TEXT PRIMARY KEY,
   value TEXT NOT NULL
@@ -461,9 +473,26 @@ route('DELETE', '/api/products/:id', (req, res, m) => {
 
 /* ---- visits ---- */
 route('POST', '/api/visits/track', async (req, res, m, ctx) => {
-  const day = /^\d{4}-\d{2}-\d{2}$/.test(esc(ctx.body.day)) ? esc(ctx.body.day) : new Date().toISOString().slice(0, 10);
+  if (!rateLimit(res, ctx.ip, 'visit', 120, 60000)) return;
+  const day = new Date().toISOString().slice(0, 10);
   db.prepare(`INSERT INTO visits (day, count) VALUES (?, 1) ON CONFLICT(day) DO UPDATE SET count = count + 1`).run(day);
+  const ua = esc(req.headers['user-agent']).slice(0, 500);
+  const device = /mobile|android|iphone|ipad/i.test(ua) ? 'موبايل / تابلت' : 'كمبيوتر';
+  db.prepare(`INSERT INTO visitor_logs (ip, page, referrer, user_agent, device) VALUES (?, ?, ?, ?, ?)`)
+    .run(String(ctx.ip || 'غير معروف').slice(0, 80),
+      esc(ctx.body.page).slice(0, 300) || '/',
+      esc(ctx.body.referrer).slice(0, 500),
+      ua, device);
   ok(res, { tracked: true });
+});
+
+route('GET', '/api/visitors', (req, res, m, ctx) => {
+  if (!requireAuth(req, res)) return;
+  const limit = Math.min(Math.max(Number(ctx.query.limit) || 200, 1), 1000);
+  const items = db.prepare('SELECT id, ip, page, referrer, user_agent, device, created_at FROM visitor_logs ORDER BY id DESC LIMIT ?').all(limit);
+  const total = db.prepare('SELECT COUNT(*) c FROM visitor_logs').get().c;
+  const uniqueIPs = db.prepare('SELECT COUNT(DISTINCT ip) c FROM visitor_logs').get().c;
+  ok(res, { items, total, uniqueIPs });
 });
 
 /* ---- stats ---- */
@@ -535,6 +564,7 @@ route('GET', '/api/backup', (req, res) => {
     maintenance: db.prepare('SELECT * FROM maintenance ORDER BY id').all(),
     products: db.prepare('SELECT * FROM products ORDER BY id').all(),
     visits: db.prepare('SELECT * FROM visits ORDER BY day').all(),
+    visitorLogs: db.prepare('SELECT * FROM visitor_logs ORDER BY id').all(),
   });
 });
 
@@ -580,6 +610,44 @@ route('POST', '/api/import', async (req, res, m, ctx) => {
         );
         imported++;
       } catch { /* skip */ }
+    }
+  }
+  if (Array.isArray(b.products)) {
+    for (const p of b.products) {
+      if (!p || !p.title) continue;
+      try {
+        db.prepare(`INSERT INTO products (legacy_id, title, price, category, image, description, active, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+          .run(p.id != null ? String(p.id).slice(0, 80) : null,
+            String(p.title).slice(0, 300), String(p.price || '').slice(0, 60),
+            String(p.category || '').slice(0, 100), String(p.image || '').slice(0, 500),
+            String(p.description || '').slice(0, 2000), p.active === 0 ? 0 : 1,
+            p.created_at && !Number.isNaN(Date.parse(p.created_at)) ? new Date(p.created_at).toISOString() : nowISO(),
+            nowISO());
+        imported++;
+      } catch { /* skip invalid rows */ }
+    }
+  }
+  if (Array.isArray(b.visitorLogs)) {
+    for (const v of b.visitorLogs) {
+      if (!v || !v.ip) continue;
+      try {
+        db.prepare(`INSERT INTO visitor_logs (ip, page, referrer, user_agent, device, created_at)
+          VALUES (?, ?, ?, ?, ?, ?)`)
+          .run(String(v.ip).slice(0, 80), String(v.page || '/').slice(0, 300),
+            String(v.referrer || '').slice(0, 500), String(v.user_agent || '').slice(0, 500),
+            String(v.device || '').slice(0, 40),
+            v.created_at && !Number.isNaN(Date.parse(v.created_at)) ? new Date(v.created_at).toISOString() : nowISO());
+        imported++;
+      } catch { /* skip invalid rows */ }
+    }
+  }
+  if (Array.isArray(b.visits)) {
+    for (const v of b.visits) {
+      if (!v || !/^\\d{4}-\\d{2}-\\d{2}$/.test(String(v.day || ''))) continue;
+      const count = Math.max(0, Math.min(Number(v.count) || 0, 100000000));
+      db.prepare(`INSERT INTO visits (day, count) VALUES (?, ?)
+        ON CONFLICT(day) DO UPDATE SET count = MAX(count, excluded.count)`).run(v.day, count);
     }
   }
   ok(res, { imported });

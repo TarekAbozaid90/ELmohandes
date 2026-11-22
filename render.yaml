@@ -4,7 +4,7 @@ services:
     name: ElMohandes
     runtime: node
     branch: main
-    plan: free
+    plan: starter
     buildCommand: ""
     startCommand: node server/server.js
     healthCheckPath: /api/health
@@ -13,5 +13,11 @@ services:
         value: "22"
       - key: HOST
         value: 0.0.0.0
+      - key: DATA_DIR
+        value: /var/data
       - key: SEED_DEMO
         value: "1"
+    disk:
+      name: mohandis-data
+      mountPath: /var/data
+      sizeGB: 1

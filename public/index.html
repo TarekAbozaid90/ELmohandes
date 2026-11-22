@@ -545,7 +545,7 @@
                 if (!sessionStorage.getItem('mhs_visit_sent')) {
                     sessionStorage.setItem('mhs_visit_sent', '1');
                     fetch('/api/visits/track', { method: 'POST', headers: {'Content-Type':'application/json'},
-                        body: JSON.stringify({ day: new Date().toISOString().slice(0,10) }) }).catch(()=>{});
+                        body: JSON.stringify({ day: new Date().toISOString().slice(0,10), page: location.pathname + location.search, referrer: document.referrer || '' }) }).catch(()=>{});
                 }
             } catch(e){}
         })();
