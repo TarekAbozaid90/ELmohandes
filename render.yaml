@@ -21,3 +21,14 @@ services:
       name: mohandis-data
       mountPath: /var/data
       sizeGB: 1
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/qr', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'qr.html'));
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
