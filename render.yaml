@@ -1,0 +1,24 @@
+# Free web service + external PostgreSQL (e.g. Neon Free). No Render disk or 30-day database.
+# For an existing deployment, set these values in its Dashboard to keep the same onrender.com URL.
+services:
+  - type: web
+    name: ElMohandes
+    runtime: node
+    branch: main
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: REQUIRE_POSTGRES
+        value: "1"
+      - key: SEED_DEMO
+        value: "0"

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> مركز المهندس الشامل لصيانة وبيع الأجهزة المنزلية | م/ أحمد مصطفى - النسخة النهائية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { gold: '#d11a22', darkGold: '#d97706', red: '#dc2626', darkRed: '#b91c1c', dark: '#1e293b' }
+                    },
+                    fontFamily: { tajawal: ['Tajawal', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
+        .bg-banner { background: linear-gradient(135deg, #0f2a53 0%, #0a1e3a 100%); }
+        .pulse-whatsapp { animation: pulse-ring 2s infinite; }
+        @keyframes pulse-ring { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37,211,102,0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- TOP BAR -->
+    <div class="bg-[#0f2a53] text-white font-bold text-xs sm:text-sm py-2 px-4 text-center border-b-2 border-[#d11a22]">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <span class="flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench animate-bounce"></i> مركز المهندس الشامل - صيانة وبيع الأجهزة المنزلية بأعلى جودة وأفضل الأسعار!</span>
+            <div class="flex items-center gap-4">
+                <a href="tel:01007889396" class="hover:underline flex items-center gap-1"><i class="fa-solid fa-phone"></i> 01007889396</a>
+                <span>|</span>
+                <span>إدارة: م/ أحمد مصطفى</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="assets/logo-circle-400.jpg" alt="شعار مركز المهندس الشامل" class="w-12 h-12 rounded-full object-cover shadow-lg ring-2 ring-slate-100 group-hover:scale-105 transition-transform bg-white">
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl text-slate-900 leading-tight">مركز المهندس الشامل</h1>
+                    <p class="text-xs font-bold" style="color:#d11a22">EL-MOHANDES AL-SHAMEL • صيانة وبيع الأجهزة</p>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-6 font-semibold text-slate-700">
+                <a href="#home" class="hover:text-amber-600 transition-colors">الرئيسية</a>
+                <a href="#products" class="hover:text-amber-600 transition-colors">المنتجات والعروض</a>
+                <a href="#maintenance" class="hover:text-amber-600 transition-colors">طلب صيانة</a>
+                <a href="/qr" class="hover:text-amber-600 transition-colors">روابط التواصل</a>
+            </nav>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="https://chat.whatsapp.com/ITxbrqZBRlf4zSCMM3gzEW" target="_blank" class="hidden sm:flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/20 pulse-whatsapp">
+                    <i class="fa-brands fa-whatsapp text-base"></i><span>جروب الواتساب</span>
+                </a>
+                <button onclick="window.open('/admin', '_blank', 'noopener')" title="فتح لوحة التحكم في تبويب منفصل" class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
+                    <i class="fa-solid fa-user-gear text-amber-400"></i><span class="hidden sm:inline">لوحة التحكم</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="relative bg-banner text-white overflow-hidden py-16 md:py-24 border-b border-slate-800">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d11a22_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-10 items-center">
+            <div class="space-y-6 text-center md:text-right">
+                <span class="inline-block bg-white/10 border border-white/20 text-amber-300 text-xs sm:text-sm px-4 py-1.5 rounded-full font-bold">✨ أفضل العروض والتصليح الضامن بالقطع الأصلية</span>
+                <h2 class="text-3xl sm:text-5xl font-black leading-tight">وجهتك الأولى لشراء وصيانة <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">الأجهزة المنزلية</span></h2>
+                <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">تحت إشراف المهندس <strong class="text-white">أحمد مصطفى</strong>. نوفر لك أحدث الأجهزة والعروض الحصرية، بالإضافة لخدمات الصيانة السريعة والمنزلية وبضمان معتمد.</p>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+                    <a href="#products" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold px-6 py-3.5 rounded-xl shadow-lg shadow-amber-500/25 transition-all flex items-center gap-2"><i class="fa-solid fa-bag-shopping"></i> تصفح المنتجات والعروض</a>
+                    <a href="#maintenance" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-wrench text-amber-400"></i> طلب صيانة جهازك</a>
+                </div>
+                <div class="grid grid-cols-3 gap-3 pt-6 border-t border-slate-800 text-center">
+                    <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50"><i class="fa-solid fa-truck-fast text-amber-400 text-xl mb-1"></i><p class="text-xs font-bold text-slate-300">توصيل سريع</p></div>
+                    <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50"><i class="fa-solid fa-shield-halved text-amber-400 text-xl mb-1"></i><p class="text-xs font-bold text-slate-300">ضمان للصيانة</p></div>
+                    <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50"><i class="fa-solid fa-hand-holding-dollar text-amber-400 text-xl mb-1"></i><p class="text-xs font-bold text-slate-300">أسعار تنافسية</p></div>
+                </div>
+            </div>
+            <div class="bg-white text-slate-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+                <div class="absolute -top-4 -right-4 bg-red-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-md">خدمة صيانة فورية 🛠️</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">هل جهازك معطل؟</h3>
+                <p class="text-sm text-slate-600 mb-6">سجل بياناتك وسيتواصل معك مهندس الصيانة فوراً لتحديد الموعد</p>
+                <form onsubmit="handleHeroMaintenanceSubmit(event)" class="space-y-4">
+                    <div><label class="block text-xs font-bold text-slate-700 mb-1">الاسم بالكامل</label><input type="text" id="hero-name" required placeholder="أدخل اسمك بالكامل" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 text-sm"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف</label><input type="tel" id="hero-phone" required placeholder="010xxxxxxx" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 text-sm"></div>
+                        <div><label class="block text-xs font-bold text-slate-700 mb-1">نوع الجهاز</label><select id="hero-device" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 text-sm"><option value="">اختر الجهاز...</option><option>غسالة</option><option>ثلاجة</option><option>خلاط / كبة</option><option>بوتاجاز / فرن</option><option>جهاز طبي / ضغط</option><option>أخرى</option></select></div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">العنوان / المنطقة *</label>
+                        <input type="text" id="hero-address" placeholder="عين شمس - شارع ..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 text-sm">
+                    </div>
+                    <div><label class="block text-xs font-bold text-slate-700 mb-1">تفاصيل العطل</label><textarea id="hero-desc" rows="2" required placeholder="اكتب عطل الجهاز باختصار..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 text-sm"></textarea></div>
+                    <!-- صور العطل - حد أقصى 2 -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                        <label class="block text-xs font-black text-amber-800 mb-2 flex items-center gap-1"><i class="fa-solid fa-camera"></i> صور العطل (اختياري - حتى صورتين)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex flex-col items-center justify-center gap-1 bg-white hover:bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-3 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-image text-amber-500"></i>
+                                <span class="text-[10px] font-bold text-slate-700">صورة 1</span>
+                                <span class="text-[9px] text-slate-400">اضغط للاختيار</span>
+                                <input type="file" accept="image/*" onchange="handleFaultImage(event, 'hero', 0)" class="hidden">
+                            </label>
+                            <label class="flex flex-col items-center justify-center gap-1 bg-white hover:bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-3 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-image text-amber-500"></i>
+                                <span class="text-[10px] font-bold text-slate-700">صورة 2</span>
+                                <span class="text-[9px] text-slate-400">اضغط للاختيار</span>
+                                <input type="file" accept="image/*" onchange="handleFaultImage(event, 'hero', 1)" class="hidden">
+                            </label>
+                        </div>
+                        <div id="hero-fault-preview" class="flex gap-2 mt-2 flex-wrap"></div>
+                        <p class="text-[10px] text-slate-400 mt-1">سيتم ضغط الصور تلقائياً لتوفير المساحة</p>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md"><i class="fa-solid fa-paper-plane text-amber-400"></i> إرسال طلب الصيانة الآن</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products" class="py-16 container mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <span class="text-amber-600 font-extrabold text-sm uppercase tracking-wide">المنتجات المتوفرة في المركز</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-1">أحدث العروض والأجهزة المتاحة</h2>
+                <p class="text-sm text-slate-500 mt-1">اضغط على أي تصنيف لفلترة المنتجات • كل البيانات محفوظة تلقائياً</p>
+            </div>
+            <div class="flex flex-wrap gap-2" id="filter-buttons">
+                <button onclick="filterProducts('all', event)" data-cat="all" class="cat-btn active bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">الكل <span id="count-all" class="bg-white/20 px-1.5 py-0.5 rounded text-[10px] mr-1"></span></button>
+                <button onclick="filterProducts('عروض', event)" data-cat="عروض" class="cat-btn bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition-all">🔥 عروض العروسة</button>
+                <button onclick="filterProducts('رمضان', event)" data-cat="رمضان" class="cat-btn bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition-all">🌙 كوشنات رمضان</button>
+                <button onclick="filterProducts('أجهزة طبية', event)" data-cat="أجهزة طبية" class="cat-btn bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition-all">🩺 أجهزة طبية</button>
+                <button onclick="filterProducts('أجهزة منزلية', event)" data-cat="أجهزة منزلية" class="cat-btn bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition-all">🏠 أجهزة منزلية</button>
+            </div>
+        </div>
+        <div id="catalog-status" role="status" class="text-center py-6 text-sm font-bold text-slate-600"><span id="catalog-message">جاري تحميل المنتجات…</span>
+            <button type="button" id="catalog-retry" onclick="loadCatalog()" class="hidden mx-2 text-red-700 underline">حاول مرة تانية</button>
+        </div>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+        <div id="no-products-msg" class="hidden text-center py-12">
+            <div class="inline-flex flex-col items-center gap-3 bg-white border border-slate-200 rounded-2xl px-8 py-6">
+                <i class="fa-solid fa-box-open text-3xl text-slate-400"></i>
+                <p class="font-bold text-slate-600">لا توجد منتجات في هذا القسم حالياً</p>
+                <button onclick="filterProducts('all', event)" class="text-amber-600 font-bold text-sm underline">عرض كل المنتجات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAINTENANCE -->
+    <section id="maintenance" class="py-16 bg-slate-900 text-white relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full">خدمة الصيانة الشاملة</span>
+                <h2 class="text-3xl font-black mt-3">خدمات صيانة الأجهزة المنزلية بمهارة واحترافية</h2>
+                <p class="text-slate-400 text-sm mt-2">نقدم خدمات صيانة فورية للأجهزة الكهربائية والمنزلية والطبية مع استخدام قطع الغيار الأصلية وتحت إشراف م/ أحمد مصطفى.</p>
+            </div>
+            <div class="max-w-2xl mx-auto bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl">
+                <form onsubmit="handleMainMaintenanceSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-bold text-slate-300 mb-1">الاسم بالكامل *</label><input type="text" id="m-name" required placeholder="أدخل اسمك" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm text-white"></div>
+                        <div><label class="block text-xs font-bold text-slate-300 mb-1">رقم الهاتف *</label><input type="tel" id="m-phone" required placeholder="010xxxxxxx" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm text-white"></div>
+                    </div>
+                    <div><label class="block text-xs font-bold text-slate-300 mb-1">نوع الجهاز المطلوب صيانته *</label><select id="m-device" required class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm text-white"><option value="">اختر الجهاز...</option><option>غسالة أوتوماتيك / عادية</option><option>ثلاجة / ديب فريزر</option><option>خلاط / كبة / هاند بلندر</option><option>بوتاجاز / فرن بلت إن</option><option>جهاز قياس ضغط / طبي</option><option>جهاز منزلي آخر</option></select></div>
+                    <div><label class="block text-xs font-bold text-slate-300 mb-1">العنوان / المنطقة</label><input type="text" id="m-address" placeholder="العنوان لتحديد موقع الصيانة" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm text-white"></div>
+                    <div><label class="block text-xs font-bold text-slate-300 mb-1">وصف العطل بالتفصيل *</label><textarea id="m-desc" rows="4" required placeholder="اشرح المشكلة باختصار..." class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm text-white"></textarea></div>
+                    <!-- صور العطل - حد أقصى 2 - للفورم الرئيسي -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-3">
+                        <label class="block text-xs font-black text-amber-400 mb-2 flex items-center gap-1"><i class="fa-solid fa-camera"></i> صور العطل (اختياري - حتى صورتين) 📸</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex flex-col items-center justify-center gap-1 bg-slate-900 hover:bg-slate-800 border-2 border-dashed border-slate-600 rounded-xl p-3 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-camera text-amber-400"></i>
+                                <span class="text-[10px] font-bold text-white">صورة 1</span>
+                                <input type="file" accept="image/*" onchange="handleFaultImage(event, 'main', 0)" class="hidden">
+                            </label>
+                            <label class="flex flex-col items-center justify-center gap-1 bg-slate-900 hover:bg-slate-800 border-2 border-dashed border-slate-600 rounded-xl p-3 cursor-pointer transition-colors">
+                                <i class="fa-solid fa-camera text-amber-400"></i>
+                                <span class="text-[10px] font-bold text-white">صورة 2</span>
+                                <input type="file" accept="image/*" onchange="handleFaultImage(event, 'main', 1)" class="hidden">
+                            </label>
+                        </div>
+                        <div id="main-fault-preview" class="flex gap-2 mt-2 flex-wrap"></div>
+                    </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"><i class="fa-solid fa-wrench"></i> إرسال طلب الصيانة الآن</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-amber-600 font-extrabold text-sm uppercase tracking-wide">بيانات الاتصال وموقعنا</span>
+            <h2 class="text-3xl font-black text-slate-900 mt-1">تواصل معنا أو قم بزيارتنا في المركز</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-sm"><i class="fa-solid fa-phone"></i></div>
+                    <div><p class="text-xs font-bold text-slate-400">رقم التواصل المباشر</p><a href="tel:01007889396" class="text-xl font-black text-slate-900 hover:text-amber-600 inline-block mt-0.5">01007889396</a><p class="text-xs text-slate-500 mt-0.5">متاح دائماً للاتصال والاستفسارات</p></div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-sm"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div><p class="text-xs font-bold text-slate-400">جروب الواتساب الرسمي</p><a href="https://chat.whatsapp.com/ITxbrqZBRlf4zSCMM3gzEW" target="_blank" class="text-base font-extrabold text-emerald-600 hover:underline inline-block mt-1">انضم لمجتمع الواتساب عروض متجددة</a><p class="text-xs text-slate-500 mt-0.5">تابع كل جديد وأقوى عروض الأسعار</p></div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div class="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-sm"><i class="fa-solid fa-location-dot"></i></div>
+                    <div><p class="text-xs font-bold text-slate-400">موقع المركز الجغرافي</p><a href="https://maps.app.goo.gl/HJb7DX5j6TaDyxpK8" target="_blank" class="text-base font-extrabold text-red-600 hover:underline inline-block mt-1">فتح اللوكيشن على خرائط جوجل</a><p class="text-xs text-slate-500 mt-0.5">يسعدنا زيارتكم في مقر المركز في عين شمس / عزبة النخل الشرقية</p></div>
+                </div>
+                <!-- WhatsApp Channel Box - جديد -->
+                <a href="https://whatsapp.com/channel/0029VbDoSDp1t90WXUmbYS1Z" target="_blank" class="bg-gradient-to-r from-[#0f2a53] to-[#1a3a6b] p-[1px] rounded-3xl shadow-sm hover:shadow-md transition-all group">
+                    <div class="bg-white rounded-[23px] p-6 flex items-center gap-5 group-hover:bg-emerald-50/30 transition-colors">
+                        <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:bg-emerald-500 group-hover:text-white transition-colors"><i class="fa-solid fa-bullhorn"></i></div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-slate-400">قناة العروض الحصرية</p>
+                            <p class="text-base font-black text-slate-900 group-hover:text-emerald-700">تابعنا على WhatsApp Channel لأحدث العروض <i class="fa-solid fa-arrow-up-right-from-square text-xs text-emerald-500"></i></p>
+                            <p class="text-xs text-slate-500 mt-0.5">عروض يومية وخصومات حصرية للقناة فقط</p>
+                        </div>
+                        <div class="hidden sm:flex bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-black items-center gap-2"><i class="fa-brands fa-whatsapp"></i> متابعة</div>
+                    </div>
+                </a>
+            </div>
+            <div class="bg-white p-3 rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                <div class="flex-1 w-full min-h-[320px] rounded-2xl overflow-hidden relative">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d862.6316656563548!2d31.3311507!3d30.1363552!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14581533a8db8263%3A0x7c794b9912125871!2z2YXYsdmD2LIg2KfZhNmF2YfZhtiv2LMg2KfZhNi02KfZhdmE!5e0!3m2!1sen!2seg!4v1794320583339!5m2!1sen!2seg" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <div class="p-3 text-center"><a href="https://maps.app.goo.gl/HJb7DX5j6TaDyxpK8" target="_blank" class="text-xs font-bold bg-slate-900 text-white py-2.5 px-4 rounded-xl hover:bg-slate-800 transition-colors inline-flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-amber-400"></i> انتقل إلى الموقع بدقة على Google Maps</a></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0b1f3a] text-slate-300 py-10 border-t border-[#d11a22]/20 text-center text-xs">
+        <div class="container mx-auto px-4 space-y-3">
+            <div class="flex items-center justify-center gap-2 text-white font-bold text-base"><i class="fa-solid fa-toolbox text-amber-500"></i><span>مركز المهندس الشامل لصيانة وبيع الأجهزة المنزلية</span></div>
+            <p>صاحب المركز: <strong>م/ أحمد مصطفى</strong> | رقم التواصل: <a href="tel:01007889396" class="text-amber-400 underline">01007889396</a></p>
+            <p><a class="text-white underline decoration-amber-400 underline-offset-4" href="/qr">كل روابط التواصل في صفحة واحدة</a></p>
+            <p class="text-slate-600 pt-2">جميع الحقوق محفوظة © <span id="year"></span> • النسخة النهائية المفعّلة</p>
+        </div>
+    </footer>
+
+    <!-- ORDER MODAL -->
+    <div id="order-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white text-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeOrderModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="mb-4">
+                <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md">طلب الشراء الآن</span>
+                <h3 id="modal-product-title" class="text-lg font-black text-slate-900 mt-2">اسم المنتج</h3>
+                <p id="modal-product-price" class="text-base font-extrabold text-red-600 mt-1">السعر: 0 جنيه</p>
+                <img id="modal-product-img" src="" alt="" class="w-full h-28 object-contain bg-slate-50 rounded-xl mt-3 border border-slate-100 hidden">
+            </div>
+            <form onsubmit="handleDirectOrderSubmit(event)" class="space-y-4">
+                <input type="hidden" id="modal-product-id">
+                <div><label class="block text-xs font-bold text-slate-700 mb-1">الاسم الكامل *</label><input type="text" id="order-name" required placeholder="أدخل اسمك الكريم" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف (للتواصل والتأكيد) *</label><input type="tel" id="order-phone" required placeholder="010xxxxxxx" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-700 mb-1">العنوان التفصيلي للتوصيل *</label><input type="text" id="order-address" required placeholder="المدينة، الشارع، رقم الحارة أو العمارة" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"></div>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition-colors shadow-lg shadow-red-600/25 flex items-center justify-center gap-2"><i class="fa-solid fa-check"></i> تأكيد وإرسال طلب الشراء</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN AUTH - مخفي حسب طلبك (الدخول مب    <!-- PRODUCT DETAIL POPUP - تكبير الصورة والتفاصيل -->
+    <div id="product-detail-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[60] hidden items-center justify-center p-4" onclick="if(event.target===this)closeProductDetail()">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl max-h-[90vh] flex flex-col relative">
+            <button onclick="closeProductDetail()" class="absolute top-3 left-3 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-slate-700 shadow-md z-10"><i class="fa-solid fa-xmark"></i></button>
+            <div class="bg-slate-50 p-2">
+                <img id="detail-img" src="" alt="" class="w-full h-[340px] object-contain rounded-2xl bg-white">
+            </div>
+            <div class="p-5 overflow-y-auto">
+                <div class="flex items-center gap-2 mb-2">
+                    <span id="detail-cat" class="bg-[#0f2a53] text-white text-[11px] px-2.5 py-1 rounded-full font-bold">التصنيف</span>
+                    <span id="detail-price-old" class="text-xs text-slate-400 line-through hidden"></span>
+                </div>
+                <h3 id="detail-title" class="font-black text-lg text-slate-900 leading-snug"></h3>
+                <p id="detail-desc" class="text-sm text-slate-600 mt-2 leading-relaxed"></p>
+                <div class="flex items-center justify-between mt-4 bg-slate-50 rounded-2xl p-3 border">
+                    <span id="detail-price" class="text-xl font-black text-[#d11a22]"></span>
+                    <button onclick="closeProductDetail(); const id=document.getElementById('detail-id').value; openOrderModal(parseInt(id))" class="bg-[#d11a22] hover:bg-[#a3141c] text-white px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> طلب المنتج</button>
+                    <input type="hidden" id="detail-id">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 z-[60] transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i><span id="toast-msg" class="text-sm font-bold">تم بنجاح</span>
+    </div>
+
+    <script>
+        let products = [];
+        let currentFilter = 'all';
+        const ADMIN_WHATSAPP = '201007889396';
+        const ADMIN_EMAIL = 'Ahmed.nokia198826@gmail.com';
+        const defaultImage = '/assets/logo-circle-400.jpg';
+        const htmlText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+        (async function trackVisit() {
+            let sent = false;
+            try { sent = sessionStorage.getItem('mhs_visit_sent') === '1'; } catch {}
+            if (sent) return;
+            try {
+                const r = await fetch('/api/visits/track', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ page: location.pathname, referrer: document.referrer || '' })
+                });
+                if (r.ok) sessionStorage.setItem('mhs_visit_sent', '1');
+            } catch {}
+        })();
+        // صور الأعطال
+        let heroFaultImages = [null, null];
+        let mainFaultImages = [null, null];
+        async function compressImage(file, maxWidth=800, quality=0.7) {
+            return new Promise((resolve)=>{
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        if (w > maxWidth) { h = h * maxWidth / w; w = maxWidth; }
+                        canvas.width = w; canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        async function handleFaultImage(event, formType, index) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 5*1024*1024) { showToast('حجم الصورة كبير جداً (الحد 5MB)', true); return; }
+            const compressed = await compressImage(file, 700, 0.6);
+            if (formType === 'hero') {
+                heroFaultImages[index] = compressed;
+                renderFaultPreview('hero', heroFaultImages);
+            } else {
+                mainFaultImages[index] = compressed;
+                renderFaultPreview('main', mainFaultImages);
+            }
+            showToast('تم تحميل الصورة - سيتم إرسالها مع الطلب');
+            event.target.value = '';
+        }
+        function renderFaultPreview(formType, images) {
+            const id = formType === 'hero' ? 'hero-fault-preview' : 'main-fault-preview';
+            const container = document.getElementById(id);
+            if (!container) return;
+            container.innerHTML = '';
+            images.forEach((img, idx)=>{
+                if (!img) return;
+                const div = document.createElement('div');
+                div.className = 'relative';
+                div.innerHTML = `<img src="${img}" class="w-16 h-16 object-cover rounded-xl border-2 border-amber-300"><button onclick="removeFaultImage('${formType}', ${idx})" class="absolute -top-1 -right-1 bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px]"><i class="fa-solid fa-xmark"></i></button>`;
+                container.appendChild(div);
+            });
+        }
+        function removeFaultImage(formType, index) {
+            if (formType === 'hero') { heroFaultImages[index]=null; renderFaultPreview('hero', heroFaultImages); }
+            else { mainFaultImages[index]=null; renderFaultPreview('main', mainFaultImages); }
+        }
+        function clearFaultImages(formType) {
+            if (formType === 'hero') { heroFaultImages=[null,null]; const c=document.getElementById('hero-fault-preview'); if(c) c.innerHTML=''; }
+            else { mainFaultImages=[null,null]; const c=document.getElementById('main-fault-preview'); if(c) c.innerHTML=''; }
+        }
+        // الإشعارات اختيارية ولا تتحكم في حفظ الطلب.
+        function notifyManager(type, data) {
+            void sendEmailNotification(type, data);
+            void sendCallMeBotWhatsApp(type, data);
+        }
+        // --- إيميل تلقائي عبر FormSubmit (Gmail) ---
+        async function sendEmailNotification(type, data) {
+            try {
+                const endpoint = `https://formsubmit.co/ajax/${ADMIN_EMAIL}`;
+                let payload = {};
+                if (type === 'order') {
+                    payload = {
+                        _subject: `🛒 طلب شراء جديد - ${data.productTitle} - ${data.customerName}`,
+                        _template: 'table',
+                        _captcha: 'false',
+                        نوع_الطلب: 'شراء',
+                        المنتج: data.productTitle,
+                        السعر: data.price,
+                        اسم_العميل: data.customerName,
+                        هاتف_العميل: data.phone,
+                        عنوان_العميل: data.address,
+                        التاريخ: `${data.date} ${data.time||''}`,
+                        رسالة: `طلب شراء جديد من ${data.customerName} - يرجى التواصل فوراً`
+                    };
+                } else {
+                    payload = {
+                        _subject: `🔧 طلب صيانة جديد - ${data.device} - ${data.name}`,
+                        _template: 'table',
+                        _captcha: 'false',
+                        نوع_الطلب: 'صيانة',
+                        اسم_العميل: data.name,
+                        هاتف_العميل: data.phone,
+                        نوع_الجهاز: data.device,
+                        وصف_العطل: data.desc,
+                        التاريخ: `${data.date} ${data.time||''}`,
+                        رسالة: `طلب صيانة جديد من ${data.name} - يرجى التواصل لتحديد الموعد`
+                    };
+                }
+                await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                console.log('Email sent to', ADMIN_EMAIL);
+            } catch(e) { console.log('Email failed', e); }
+        }
+        // --- واتساب تلقائي عبر CallMeBot ---
+        async function sendCallMeBotWhatsApp(type, data) {
+            try {
+                const apiKey = localStorage.getItem('eng_callmebot_key');
+                if (!apiKey) return;
+                let text = '';
+                if (type === 'order') {
+                    text = `🛒 طلب شراء جديد - مركز المهندس الشامل\n📦 المنتج: ${data.productTitle}\n💰 السعر: ${data.price}\n👤 العميل: ${data.customerName}\n📞 الهاتف: ${data.phone}\n📍 العنوان: ${data.address}\n📅 التاريخ: ${data.date} ${data.time||''}`;
+                } else {
+                    text = `🔧 طلب صيانة جديد - مركز المهندس الشامل\n👤 الاسم: ${data.name}\n📞 الهاتف: ${data.phone}\n🏷️ الجهاز: ${data.device}\n🛠️ العطل: ${data.desc}\n📅 التاريخ: ${data.date} ${data.time||''}`;
+                }
+                const url = `https://api.callmebot.com/whatsapp.php?phone=+${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}&apikey=${apiKey}`;
+                // استخدام no-cors لتجاوز CORS، CallMeBot يتطلب GET
+                await fetch(url, { mode: 'no-cors' });
+                console.log('CallMeBot WhatsApp sent');
+            } catch(e) { console.log('CallMeBot failed', e); }
+        }
+        async function loadCatalog() {
+            const status = document.getElementById('catalog-status');
+            const message = document.getElementById('catalog-message');
+            const retry = document.getElementById('catalog-retry');
+            status.classList.remove('hidden');
+            retry.classList.add('hidden');
+            message.textContent = 'جاري تحميل المنتجات…';
+            try {
+                const res = await fetch('/api/products?active=1', { cache: 'no-store' });
+                const body = await res.json();
+                if (!res.ok || !body.ok || !Array.isArray(body.data)) throw new Error('catalog unavailable');
+                products = body.data.map(p => ({ ...p, id: Number(p.id), oldPrice: p.old_price || '', discountPercent: Number(p.discount_percent) || 0 }));
+                status.classList.add('hidden');
+                renderProducts(currentFilter);
+            } catch {
+                message.textContent = 'مش قادرين نحمّل المنتجات دلوقتي.';
+                retry.classList.remove('hidden');
+                document.getElementById('no-products-msg').classList.add('hidden');
+            }
+        }
+        document.getElementById('year').textContent = new Date().getFullYear();
+        void loadCatalog();
+
+        async function saveRequest(form, path, payload, afterSave) {
+            if (form.dataset.submitting) return;
+            form.dataset.submitting = '1';
+            const submit = form.querySelector('button[type="submit"]');
+            submit.disabled = true;
+            submit.setAttribute('aria-busy', 'true');
+            try {
+                const res = await fetch(path, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+                });
+                const body = await res.json();
+                if (!res.ok || !body.ok || !body.data?.ref) throw new Error(body.error || 'تعذر حفظ الطلب');
+                afterSave(body.data);
+            } catch (err) {
+                showToast('الطلب لسه ما اتأكدش. ' + (err instanceof SyntaxError || err instanceof TypeError ? 'جرّب تاني بعد ما تتأكد من الاتصال.' : err.message), true);
+            } finally {
+                delete form.dataset.submitting;
+                submit.disabled = false;
+                submit.removeAttribute('aria-busy');
+            }
+        }
+
+        function showToast(msg, isError=false) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('i').className = isError ? 'fa-solid fa-circle-xmark text-red-400 text-xl' : 'fa-solid fa-circle-check text-emerald-400 text-xl';
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
+        }
+
+        // PRODUCTS
+        function renderProducts(filterCat = 'all') {
+            currentFilter = filterCat;
+            const grid = document.getElementById('products-grid');
+            const noMsg = document.getElementById('no-products-msg');
+            grid.innerHTML = '';
+            const filtered = filterCat === 'all' ? products : products.filter(p => p.category === filterCat);
+            document.getElementById('count-all').innerText = products.length;
+            // update cat buttons active state
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                const cat = btn.getAttribute('data-cat');
+                if (cat === filterCat) {
+                    btn.className = 'cat-btn active bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm';
+                } else {
+                    btn.className = 'cat-btn bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition-all';
+                }
+            });
+            if (filtered.length === 0) {
+                noMsg.classList.toggle('hidden', !document.getElementById('catalog-status').classList.contains('hidden'));
+                return;
+            }
+            noMsg.classList.add('hidden');
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl border border-slate-100 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden bg-slate-100 h-60 flex items-center justify-center">
+                            <img src="${htmlText(p.image || defaultImage)}" alt="${htmlText(p.title)}" loading="lazy" onerror="this.onerror=null; this.src='/assets/logo-circle-400.jpg'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-zoom-in" onclick="openProductDetail(${p.id})" title="اضغط للتكبير">
+                            <span class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm text-amber-400 font-bold text-xs px-3 py-1 rounded-lg">${htmlText(p.category)}</span>
+                            ${p.discountPercent ? `<span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded-lg">خصم ${p.discountPercent}%</span>` : (p.oldPrice ? `<span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded-lg">عرض خاص</span>` : '')}
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-extrabold text-sm sm:text-base text-slate-900 leading-snug group-hover:text-[#d11a22] transition-colors cursor-pointer" onclick="openProductDetail(${p.id})">${htmlText(p.title)}</h3>
+                            <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">${htmlText(p.description || 'منتج عالي الجودة متوفر داخل المركز بضمان ومواصفات ممتازة.')}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0">
+                        <div class="flex items-baseline justify-between mb-4 border-t border-slate-100 pt-3">
+                            <div>
+                                <span class="text-lg font-black text-red-600">${htmlText(p.price)}</span>
+                                ${p.oldPrice ? `<span class="text-xs text-slate-400 line-through mr-2">${htmlText(p.oldPrice)}</span>` : ''}
+                            </div>
+                        </div>
+                        <button onclick="openOrderModal(${p.id})" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-extrabold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md shadow-red-600/20"><i class="fa-solid fa-cart-shopping"></i> طلب الشراء الآن</button>
+                        <button onclick="shareProduct(${p.id})" class="w-full mt-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1"><i class="fa-solid fa-share-nodes text-slate-400"></i> مشاركة المنتج</button>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProducts(cat, e) {
+            if (e) e.preventDefault();
+            renderProducts(cat);
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function shareProduct(id) {
+            const p = products.find(x => x.id == id);
+            if (navigator.share) navigator.share({ title: p.title, text: p.title + ' - ' + p.price }).catch(()=>{});
+            else showToast('انسخ رابط الصفحة لمشاركة المنتج');
+        }
+        function openProductDetail(id){
+            const p = products.find(x=>x.id==id);
+            if(!p) return;
+            document.getElementById('detail-img').src = p.image || defaultImage;
+            document.getElementById('detail-title').innerText = p.title;
+            document.getElementById('detail-desc').innerText = p.description || 'منتج أصلي بضمان مركز المهندس الشامل';
+            document.getElementById('detail-price').innerText = p.price;
+            document.getElementById('detail-cat').innerText = p.category;
+            document.getElementById('detail-id').value = p.id;
+            const oldEl = document.getElementById('detail-price-old');
+            if(p.oldPrice){ oldEl.innerText = p.oldPrice; oldEl.classList.remove('hidden'); } else { oldEl.classList.add('hidden'); }
+            const modal = document.getElementById('product-detail-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            document.body.style.overflow='hidden';
+        }
+        function closeProductDetail(){
+            const modal = document.getElementById('product-detail-modal');
+            if(modal){ modal.classList.add('hidden'); modal.classList.remove('flex'); }
+            document.body.style.overflow='';
+        }
+
+        function handleMaintenanceSubmit(e, kind) {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const prefix = kind === 'hero' ? 'hero-' : 'm-';
+            const field = id => document.getElementById(prefix + id)?.value.trim() || '';
+            const req = {
+                name: field('name'), phone: field('phone'), device: field('device'),
+                description: field('desc'), address: field('address'),
+                faultImages: (kind === 'hero' ? heroFaultImages : mainFaultImages).filter(Boolean)
+            };
+            void saveRequest(form, '/api/maintenance', req, saved => {
+                form.reset(); clearFaultImages(kind);
+                showToast('تم استلام طلب الصيانة! رقم الطلب: ' + saved.ref);
+                notifyManager('maintenance', { ...req, desc: req.description, date: new Date().toLocaleDateString('ar-EG') });
+            });
+        }
+        const handleHeroMaintenanceSubmit = e => handleMaintenanceSubmit(e, 'hero');
+        const handleMainMaintenanceSubmit = e => handleMaintenanceSubmit(e, 'main');
+
+        function openOrderModal(productId) {
+            const p = products.find(item => item.id == productId);
+            if (!p) return;
+            document.getElementById('modal-product-title').innerText = p.title;
+            document.getElementById('modal-product-price').innerText = `السعر: ${p.price}`;
+            document.getElementById('modal-product-id').value = p.id;
+            const imgEl = document.getElementById('modal-product-img');
+            imgEl.src = p.image || defaultImage; imgEl.classList.remove('hidden');
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+        function closeOrderModal() { document.getElementById('order-modal').classList.add('hidden'); }
+
+        function handleDirectOrderSubmit(e) {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const pId = document.getElementById('modal-product-id').value;
+            const product = products.find(p => String(p.id) === pId);
+            if (!product) return showToast('المنتج غير متاح حالياً.', true);
+            const order = {
+                customerName: document.getElementById('order-name').value.trim(),
+                phone: document.getElementById('order-phone').value.trim(),
+                address: document.getElementById('order-address').value.trim(),
+                productTitle: product.title, productImage: product.image, price: product.price,
+                serviceType: 'شراء', device: product.category
+            };
+            void saveRequest(form, '/api/orders', order, saved => {
+                closeOrderModal(); form.reset();
+                showToast('تم إرسال طلب الشراء! رقم الطلب: ' + saved.ref);
+                notifyManager('order', { ...order, date: new Date().toLocaleDateString('ar-EG') });
+            });
+        }
+
+        window.addEventListener('click', ev => { if (ev.target.id === 'order-modal') closeOrderModal(); });
+        document.addEventListener('keydown', ev => { if (ev.key === 'Escape') { closeProductDetail(); closeOrderModal(); } });
+    </script>
+</body>
+</html>
